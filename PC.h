@@ -16,7 +16,7 @@ class PC {
     public:
     PC();
     ~PC();
-aaaaaaaaaaaa
+
       
 };
 #endif // PC_H_INCLUDED
