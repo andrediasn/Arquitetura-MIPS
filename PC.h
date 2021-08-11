@@ -16,16 +16,7 @@ class PC {
     public:
     PC();
     ~PC();
-
-    int getID() { return this.id};
-
-
-
-
-
-
-
-
-    
+aaaaaaaaaaaa
+      
 };
 #endif // PC_H_INCLUDED
