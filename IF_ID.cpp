@@ -13,8 +13,8 @@ void IF_ID::novaInstrucao(int memInst[], int PC){
     int aluControl[8];
     for(int i = 0; i < 8; i++)
         aluControl[i] = memInst[i];
-    //Controle instrucao;
-    // instrucao.aloOP(aluControl)
+    Controle controle(aluControl);                      // dessa forma conseguiu enviar o vetor
+    
     
     ID_EX idex;
     int instruction_11_20[10];
