@@ -1,52 +1,49 @@
 #include "controle.h"
-Controle::Controle(int vet[8]){
+
+using namespace std;
+
+Controle::Controle(){}
+
+Controle::~Controle() {}
+
+void Controle::attControle(int vet[]){
     for(int i = 0; i < 8; i++){
         entrada[i] = vet[i] ;
     }
     setAluOp();
     setFunctField();
     setSaida();
-    
-}
-
-Controle::~Controle() { }
-
-void Controle::setAluOp() {
-    if(entrada[0] == 0 && entrada[1] == 0){
-        aluOp[0] = 0;
-        aluOp[1] = 0;
-    }
-    if(entrada[0] == 0 && entrada[1] == 1){
-        aluOp[0] = 0;
-        aluOp[1] = 1;
-    }
-    if(entrada[0] == 1){
-        aluOp[0] = 1;
-        aluOp[1] = 0;
-    }
 
 }
 
-void Controle::setFunctField() {
+
+int* Controle::getAluOp() {
+    aluOp[0] = entrada[0];
+    aluOp[1] = entrada[1];
+    return this->aluOpaluOp;
+}
+
+int* Controle::getFunctField() {
     for(int i = 2 ; i < 8 ; i++){
         functField[i] = entrada[i];
     }
+    return this->functFieldfunctField;
 }
 
-void Controle::setSaida() {
+int* Control::getSaida() {
     if(aluOp[0] == 0 && aluOp[1] == 0){                      // lw ou sw
        aluSaida[0] = 0;
        aluSaida[1] = 0;
        aluSaida[2] = 1;
        aluSaida[3] = 0;
     }
-    if(aluOp[0] == 1 && aluOp[1] == 1){                      // beq
+    else if(aluOp[1] == 1){                      // beq
        aluSaida[0] = 0;
        aluSaida[1] = 1;
        aluSaida[2] = 1;
        aluSaida[3] = 0;
     }
-    if(aluOp[0] == 1 && aluOp[1] == 0){                      // R-Type
+    else {                      // R-Type
         if(functField[2] == 1 && functField[3] == 0 && functField[4] == 1 && functField[4] == 0){                              // set on less than
            aluSaida[0] = 0;
            aluSaida[1] = 1;
@@ -77,7 +74,7 @@ void Controle::setSaida() {
            aluSaida[2] = 1;
            aluSaida[3] = 0;
         }
-    }                
+    }
+    return this.aluSaida;                
 }
-
 

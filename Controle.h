@@ -2,18 +2,20 @@
 #define CONTROLE_H_INCLUDED
 class Controle
 {
-    public:
-    Controle(int vet[8]);
-    ~Controle();
-    
-    
     private:
-    int aluOp[2];
-    int aluSaida[4];
-    int entrada[8];
-    int functField[6];
-    void setAluOp();
-    void setSaida();
-    void setFunctField();
+        int entrada[8]; // Recebe da IF_ID
+        int aluOp[2];
+        int aluSaida[4];
+        int functField[6];
+
+    public:
+        Controle();
+        ~Controle();
+
+        void attControle(int vet[]);
+        int* getAluOp();
+        int* getSaida();
+        int* getFunctField();
+   
 };
 #endif // CONTROLE_H_INCLUDED

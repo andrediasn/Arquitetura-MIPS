@@ -47,37 +47,17 @@ int main(){
     while(memInst[k][0] != -1){
 
 
-        // IF_ID
-        IF_ID instruction_fetched;
-        instruction_fetched.novaInstrucao(memInst[k], k*4);
-        cout << endl;
-        //banco registradores
+        // Start Pipeline - Etapa 1 do Pipeline: IF_ID
+        IF_ID *ifid = new IF_ID(memInst[k], k*4);
 
-        //ID_EX
-        //Alum
-        //shif
-        //ad pc+4 + j
+        // Etapa 2 do Pipiline: ID_EX
 
+        // Etapa 3 do Pipiline:
 
-        //
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        // Etapa 4 do Pipiline:
+
+        // Etapa 5 do Pipiline:
+         
         k++;
     }
     

@@ -1,0 +1,22 @@
+Etapa 1:
+
+    - IF_ID: 
+        Recebe PC e MemInst OK
+        Envia ReadRegister FALTA 
+        Envia inst SinalExt FALTA 
+        Envia ID_EX inst  OK
+        Envia Control ok
+    - OpLogicos: FALTA extensor de sinal
+    - BancoRegistradores: FALTA 
+    - Controle
+        Recebe de IF_ID OK
+        Envia para ID_EX FALTA ARRUMAR (OutPut do controle)
+    - ID_EX:
+        Recebe BR FALTA
+        Recebe ExtSinal FALTA
+        Recebe Control FALTA ARRUMAR (OutPut do controle)
+        Recebe IF_ID OK
+
+Etapa 2:
+
+    - ID_EX:
