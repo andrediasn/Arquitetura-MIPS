@@ -4,34 +4,34 @@ using namespace std;
 
 Controle::Controle(){}
 
-Controle::~Controle() {}
+Controle::~Controle(){}
 
 void Controle::attControle(int vet[]){
     for(int i = 0; i < 8; i++){
-        entrada[i] = vet[i] ;
+        this->entrada[i] = vet[i] ;
     }
-    setAluOp();
-    setFunctField();
-    setSaida();
+    getAluOp();
+    getFunctField();
+    getSaida();
 
 }
 
 
 int* Controle::getAluOp() {
-    this->aluOpaluOp[0] = entrada[0];
-    this->aluOpaluOp[1] = entrada[1];
-    return this->aluOpaluOp;
+    this->aluOp[0] = entrada[0];
+    this->aluOp[1] = entrada[1];
+    return this->aluOp;
 }
 
 int* Controle::getFunctField() {
-    for(int i = 4 ; i < 9 ; i++){
-        this->functFieldfunctField[i] = entrada[i];
+    for(int i = 2 ; i < 8 ; i++){
+        this->functField[i] = entrada[i];
     }
-    return this->functFieldfunctField;
+    return this->functField;
 }
 
-int* Control::getSaida() {
-    if(aluOp[0] == 0 && aluOp[1] == 0){                      // lw ou sw
+int* Controle::getSaida() {
+    if(aluOp[0] == 0 && aluOp[1] == 0){                  // lw ou sw
        this->aluSaida[0] = 0;
        this->aluSaida[1] = 0;
        this->aluSaida[2] = 1;
@@ -75,6 +75,6 @@ int* Control::getSaida() {
            this->aluSaida[3] = 0;
         }
     }
-    return this.aluSaida;                
+    return this->aluSaida;                
 }
 

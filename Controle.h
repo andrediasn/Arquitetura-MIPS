@@ -7,6 +7,7 @@ class Controle
         int aluOp[2];
         int aluSaida[4];
         int functField[6];
+        bool RegDist;
 
     public:
         Controle();

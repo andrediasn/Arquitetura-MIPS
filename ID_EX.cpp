@@ -27,7 +27,7 @@ void ID_EX::setControl(){
 void ID_EX::setReadData() { 
         BancoRegistradores br;
         //int rd1[8] = br.getReadData1();
-        //int rd2[8] = br.getReadData2();
+        //int rd2[8] = br.getReadData2()
         
         //for(int i = 0; i < 8; i++) {//confirmar ainda numero de bits
         //    this->readData1[i] = rd1[i]; 
