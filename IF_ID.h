@@ -1,5 +1,10 @@
 #ifndef IF_ID_H_INCLUDED
 #define IF_ID_H_INCLUDED
+#include <iostream>
+#include "ID_EX.h"
+#include "BancoRegistradores.h"
+#include "Controle.h"
+#include "OpLogicos.h"
 class IF_ID{
     private:
     int PC;

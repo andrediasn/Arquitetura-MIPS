@@ -34,7 +34,7 @@ void Controle::setAllSaida() {
        this->Branch = 0;
        this->ALUOp1 = 0;
        this->ALUOp0 = 0;
-    }else if {Op[2] == 1} {                          // é uma operaçao BEQ
+    }else if (Op[2] == 1) {                          // é uma operaçao BEQ
        this->ALUSrc = 0;
        this->RegWrite = 0;
        this->MemRead = 0;

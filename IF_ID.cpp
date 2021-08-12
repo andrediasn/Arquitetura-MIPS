@@ -1,9 +1,4 @@
-#include <iostream>
 #include "IF_ID.h"
-#include "ID_EX.h"
-#include "BancoRegistradores.h"
-#include "Controle.h"
-#include "OpLogicos.h"
 
 using namespace std;
 

@@ -1,17 +1,20 @@
 #ifndef OPLOGICOS_H_INCLUDED
 #define OPLOGICOS_H_INCLUDED
+#include <iostream>
 
 class OpLogicos{
     private:
+        int vetExtSinal [32];
 
     public:
-    OpLogicos();
-    ~OpLogicos();
+        OpLogicos();
+        ~OpLogicos();
 
-    int* extensorSinal(int vetIn[]);
-    int* deslocamentoEsquerda(int vet[]);
-    int* mutiplexador(int vet[], int tipo[]);
-    int andLogico(int PC, bool zeroAlu, bool algumaCoisaDaM); // returna PCsec
+        void extensorSinal(int vetIn[]);
+        int* getExtensorSinal();
+        int* deslocamentoEsquerda(int vet[]);
+        int* mutiplexador(int vet[], int tipo[]);
+        int andLogico(int PC, bool zeroAlu, bool algumaCoisaDaM); // returna PCsec
 };
 
 

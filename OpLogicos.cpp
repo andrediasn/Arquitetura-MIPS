@@ -1,22 +1,24 @@
 #include "OpLogicos.h"
-#include <iostream>
+
 
 OpLogicos::OpLogicos(){}
 OpLogicos::~OpLogicos(){}
 
-int* OpLogicos::extensorSinal(int vetIn[]){
-    int vetOut[32];
+void OpLogicos::extensorSinal(int vetIn[]){
     if(vetIn[0]==0){
         for(int i=0;i<16;i++)
-            vetOut[i] = 0;
+            this->vetExtSinal[i] = 0;
         for(int i=16;i<32;i++)  
-            vetOut[i] = vetIn[i];
+            this->vetExtSinal[i] = vetIn[i];
     }
     else{
         for(int i=0;i<16;i++)
-            vetOut[i] = 1;
+            this->vetExtSinal[i] = 1;
         for(int i=16;i<32;i++)  
-            vetOut[i] = vetIn[i];
+            this->vetExtSinal[i] = vetIn[i];
     }
-    return vetOut;
+}
+
+int* OpLogicos::getExtensorSinal(){
+    return this->vetExtSinal;
 }

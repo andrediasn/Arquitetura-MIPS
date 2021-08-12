@@ -1,5 +1,7 @@
 #ifndef BANCOREGISTRADORES_H_INCLUDED
 #define BANCOREGISTRADORES_H_INCLUDED
+#include <iostream>
+#include <math.h>
 
 class BancoRegistradores{
     private:
