@@ -11,11 +11,11 @@ void Controle::attControle(int vet[]){
     for(int i = 0; i < 6; i++){
         this->Op[i] = vet[i] ;
     }
-    getAllSaida();
+    setAllSaida();
 }
 
 
-int Controle::getAllSaida() {
+void Controle::setAllSaida() {
     if(Op[5] == 1 && Op[3] == 0){                // é uma operação LW
        this->RegDst = 0;
        this->ALUSrc = 1;
@@ -53,10 +53,17 @@ int Controle::getAllSaida() {
        this->ALUOp1 = 1;
        this->ALUOp0 = 0;
     }
-    struct result {bool RegDst; bool ALUSrc;bool MemtoReg;bool RegWrite; bool MemRead;bool MemWrite;bool Branch;bool ALUOp1;bool ALUOp2};
-    return result {this->RegDst, this->ALUSrc, this->MemtoReg, this->RegWrite, this->MemRead, this->MemWrite, this->Branch, this->ALUOp1, this->ALUOp2};   // Retorna todos
     
 }
 
+bool Controle::getRegDst() {return this->RegDst;}
+bool Controle::getALUSrc() {return this->ALUSrc;}
+bool Controle::getMemtoReg() {return this->MemtoReg;}
+bool Controle::getRegWrite() {return this->RegWrite;}
+bool Controle::getMemRead() {return this->MemRead;}
+bool Controle::getMemWrite() {return this->MemWrite;}
+bool Controle::getBranch() {return this->Branch;}
+bool Controle::getALUOp1() {return this->ALUOp1;}
+bool Controle::getALUOp0() {return this->ALUOp0;}
 
 

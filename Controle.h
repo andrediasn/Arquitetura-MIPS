@@ -19,7 +19,17 @@ class Controle
         ~Controle();
 
         void attControle(int vet[]);
-        bool getAllSaida();                        // enviando tudo 
+        void setAllSaida();         // seta todos os valores
+        bool getRegDst();
+        bool getALUSrc();
+        bool getMemtoReg();
+        bool getRegWrite();
+        bool getMemRead();
+        bool getMemWrite();
+        bool getBranch();
+        bool getALUOp0();
+        bool getALUOp1();
+                                
         
 };
 #endif // CONTROLE_H_INCLUDED
