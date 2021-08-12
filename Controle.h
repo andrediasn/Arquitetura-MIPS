@@ -3,20 +3,23 @@
 class Controle
 {
     private:
-        int entrada[8]; // Recebe da IF_ID
-        int aluOp[2];
-        int aluSaida[4];
-        int functField[6];
-        bool RegDist;
-
+        int Op[6]; // Recebe da IF_ID
+        bool RegDst;
+        bool ALUSrc;
+        bool MemtoReg;
+        bool RegWrite;
+        bool MemRead;
+        bool MemWrite;
+        bool Branch;
+        bool ALUOp0;
+        bool ALUOp1;
+        
     public:
         Controle();
         ~Controle();
 
         void attControle(int vet[]);
-        int* getAluOp();
-        int* getSaida();
-        int* getFunctField();
-   
+        bool getAllSaida();                        // enviando tudo 
+        
 };
 #endif // CONTROLE_H_INCLUDED
