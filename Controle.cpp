@@ -1,4 +1,5 @@
-#include "controle.h"
+#include "Controle.h"
+#include <iostream>
 
 using namespace std;
 
@@ -52,7 +53,8 @@ int Controle::getAllSaida() {
        this->ALUOp1 = 1;
        this->ALUOp0 = 0;
     }
-    struct result {int ; int ;};   
+    struct result {bool RegDst; bool ALUSrc;bool MemtoReg;bool RegWrite; bool MemRead;bool MemWrite;bool Branch;bool ALUOp1;bool ALUOp2};
+    return result {this->RegDst, this->ALUSrc, this->MemtoReg, this->RegWrite, this->MemRead, this->MemWrite, this->Branch, this->ALUOp1, this->ALUOp2};   // Retorna todos
     
 }
 
