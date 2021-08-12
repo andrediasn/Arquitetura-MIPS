@@ -19,6 +19,7 @@ class IF_ID{
     void toControlePrincipal();
     void toBancoRegistradores();
     void toOpLogicos();
+    void start();
     
     public:
         IF_ID(int memInst[], int PC);

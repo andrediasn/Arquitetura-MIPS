@@ -16,7 +16,7 @@ ID_EX::ID_EX(int PC, int instruction_15_11[], int instruction_20_16[]){
 }
 
 ID_EX::~ID_EX(){}
-/*
+
 void ID_EX::setControl(){
     Controle control;
     this->RegDst = control.getRegDst();
@@ -28,7 +28,7 @@ void ID_EX::setControl(){
     this->Branch = control.getBranch();
     this->ALUOp0 = control.getALUOp0();
     this->ALUOp1 = control.getALUOp1();
-}*/
+}
 
 void ID_EX::setReadData() { 
     BancoRegistradores registrador;
@@ -46,5 +46,9 @@ void ID_EX::setReadData() {
     int *aux = sinalExt.getExtensorSinal();
     for (int i = 0; i < 32; i++)
         this->instruction_15_0[i] = aux[i];
+}
+
+ID_EX* ID_EX::get(){
+    return this;
 }
 

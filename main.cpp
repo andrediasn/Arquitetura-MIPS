@@ -3,7 +3,8 @@
 #include <fstream>
 #include <string>
 #include <stdlib.h>
-//#include "IF_ID.h"
+#include "IF_ID.h"
+#include "ID_EX.h"
 
 
 using namespace std;
@@ -25,7 +26,7 @@ int main(){
         memInst[i][0] = -1; // Inicializando primeira coluna de cada linha com -1 para indicar que esta sem instrucao.
 
 
-    // ============= Etapa 1: IF - Instruction Fetch ============= // 
+    // ============= Etapa 1: IF - Instruction Fetch ======================================== // 
 
     // Lendo instrucoes de entrada e salvando na Memoria de Instrucoes
     int k = 0; // Representa a linha da matriz, PC = k * 4
@@ -51,7 +52,7 @@ int main(){
                 if(auxStr[j] != '0' && auxStr[j] != '1'){ // Se ha caractere nao binario
                     int opc;
                     do{ // Loop para resolver o erro.
-                        cout << " Erro: a linha " << (j+1) << " possui caracterio nao binario." << endl;
+                        cout << " Erro: a linha " << (k+1) << " possui caracterio nao binario." << endl;
                         cout << " - Digite 1 para encerrar." << endl;
                         cout << " - Digite 2 para prosseguir e ler a proxima linha de instrucoes." << endl;
                         cout << "Indique o que deseja fazer: ";
@@ -91,11 +92,17 @@ int main(){
     k = 0;
     while(memInst[k][0] != -1){
 
-        int PC = k * 4;
-        // Start Pipeline - Etapa 1 do Pipeline: IF_ID
-        //IF_ID *ifid = new IF_ID(memInst[k], PC);
+        // ============= Etapa 2: ID - Instruction decode / Register file read ============= // 
 
-        // Etapa 2 do Pipiline: ID_EX
+        int PC = k * 4;
+        IF_ID *etapa2 = new IF_ID(memInst[k], PC);
+        //*etapa2.start();
+
+
+        // ============= Etapa 3: EX - Execute / Address calculation ======================= // 
+
+        //ID_EX *etapa3;
+        //etapa3->get();
 
         // Etapa 3 do Pipiline:
 
