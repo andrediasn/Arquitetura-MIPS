@@ -12,7 +12,7 @@ ID_EX::ID_EX(int PC, int instruction_15_11[], int instruction_20_16[]){
 
     setReadData();
     setControl();
-    setReadData();
+    setExtSinal();
 }
 
 ID_EX::~ID_EX(){}
@@ -30,6 +30,13 @@ void ID_EX::setControl(){
     this->ALUOp1 = control.getALUOp1();
 }
 
+void ID_EX::setExtSinal() {
+    OpLogicos sinalExt;
+    int *aux = sinalExt.getExtensorSinal();
+    for (int i = 0; i < 32; i++)
+        this->instruction_15_0[i] = aux[i];
+}
+
 void ID_EX::setReadData() { 
     BancoRegistradores registrador;
     int *r1 = registrador.getReadData1();
@@ -39,13 +46,6 @@ void ID_EX::setReadData() {
         this->readData1[i] = r1[i];
         this->readData2[i] = r2[i];
     }
-}
-
-void ID_EX::setReadData() {
-    OpLogicos sinalExt;
-    int *aux = sinalExt.getExtensorSinal();
-    for (int i = 0; i < 32; i++)
-        this->instruction_15_0[i] = aux[i];
 }
 
 ID_EX* ID_EX::get(){

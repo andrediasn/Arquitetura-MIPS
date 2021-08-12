@@ -9,7 +9,7 @@
             "name": "gdb",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/main.exe",
+            "program": "${workspaceFolder}/main",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
@@ -29,7 +29,7 @@
                 }
             ],
             "preLaunchTask": "C/C++: cpp build active file",
-            "miDebuggerPath": "C:/MinGW/bin/gdb.exe"
+            "miDebuggerPath": "usr/lib/gdb"
         }
     ]
 }

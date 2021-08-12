@@ -32,7 +32,7 @@ int main(){
     int k = 0; // Representa a linha da matriz, PC = k * 4
     string auxStr; // string aux para receber linha da entrada
     while(arq.good() && k < 128){ // Enquanto nao chegou o fim do arquivo de entrada e nao foi atingido o limite de 128 instrucoes.
-        getline(arq, auxStr, '\n');
+        getline(arq, auxStr, '#');
         if(auxStr.size() != 32){
             int opc;
                 do{ // Loop para resolver o erro.

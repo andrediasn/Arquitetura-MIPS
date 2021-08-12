@@ -25,7 +25,7 @@ class ID_EX{
 
         void setReadData();
         void setControl();
-        void setUniOperacional();
+        void setExtSinal();
     
     
     public:

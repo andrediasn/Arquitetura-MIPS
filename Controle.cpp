@@ -1,5 +1,5 @@
 #include "Controle.h"
-#include <iostream>
+
 
 using namespace std;
 

@@ -1,5 +1,7 @@
 #ifndef CONTROLE_H_INCLUDED
 #define CONTROLE_H_INCLUDED
+#include <iostream>
+
 class Controle
 {
     private:
