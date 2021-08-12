@@ -1,6 +1,7 @@
 #include <iostream>
 #include "ID_EX.h"
 #include "Controle.h"
+#include "OpLogicos.h"
 
 using namespace std;
 
@@ -36,6 +37,7 @@ void ID_EX::setReadData() {
 }
 
 void ID_EX::setUniOperacional(){
-    
+    OpLogicos extSinal;
+    extSinal.extensorSinal(this->instruction_0_15);
 }
 

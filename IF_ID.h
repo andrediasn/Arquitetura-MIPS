@@ -3,15 +3,15 @@
 class IF_ID{
     private:
     int PC;
-    int controle[8]; // Para a unidade de controle
-    int instruction_0_15[16]; // Para unidade operacional
-    int instruction_11_15[5]; // Para ID_EX
-    int instruction_16_20[5]; // Para ID_Ex
-    int readRegister1[16]; // ver o valor de bits ta certo // Para banco de registradores
-    int readRegister2[16]; // ver o valor de bits ta certo // Para banco de registradores
+    int controle[6]; // Bits 31-26 do Para a unidade de controle
+    int instruction_15_0[16]; // Para unidade operacional
+    int instruction_20_16[5]; // Para ID_Ex
+    int instruction_15_11[5]; // Para ID_EX
+    int readRegister1[16]; // Bits 25-16 para Banco de Registradores
+    int readRegister2[16]; // Bits 20-16 para banco de registradores
 
     void toID_EX();
-    void toControle();
+    void toControlePrincipal();
     void toBancoRegistradores();
     void toOpLogicos();
     

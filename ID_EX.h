@@ -8,7 +8,7 @@ class ID_EX{
         int EX[3];
         int MEM;
         int WB;
-        int instruction_0_15[16];
+        int instruction_0_15[32]; // Apos extensao de sinal
         int instruction_11_15[5];
         int instruction_16_20[5];
         int readData1[8];

@@ -107,4 +107,6 @@ int main(){
          
         
     }
+
+    // instruction [31][30][29]
 }

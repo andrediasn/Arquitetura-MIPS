@@ -1,4 +1,4 @@
-Etapa 1:
+Etapa 2:
 
     - IF_ID: 
         Recebe PC e MemInst OK
