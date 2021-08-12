@@ -3,7 +3,7 @@
 #include <fstream>
 #include <string>
 #include <stdlib.h>
-#include <bitset>
+#include "IF_ID.h"
 
 
 using namespace std;
@@ -21,25 +21,65 @@ int main(){
     }
 
     int memInst[128][32];
-    int i = 0;
+    for(int i = 0; i < 128; i++) 
+        memInst[i][0] = -1;
+
+    int k = 0;
     string auxStr;
-    while(arq.good() && i < 128){
+    while(arq.good() && k < 128){
         getline(arq, auxStr, '\n');
         for (int j = 0; j < 32; j++){
             if(auxStr[j] == '0')
-                memInst[i][j] = 0;
+                memInst[k][j] = 0;
             if(auxStr[j] == '1')
-                memInst[i][j] = 1;
-            cout << memInst[i][j];
+                memInst[k][j] = 1;
         }
-        i++;
+        k++;
     }
+        
 
-    if(i == 128){
+    if(k == 128){
         cout << "Atingiu o limite da memoria de instrucoes." << endl;
         cout << "Deseja continuar a execucao com as 128 primeiras instrucoes? (y/n) ";
     }
 
+    k = 0;
+    while(memInst[k][0] != -1){
+
+
+        // IF_ID
+        IF_ID instruction_fetched;
+        instruction_fetched.novaInstrucao(memInst[k], k*4);
+        cout << endl;
+        //banco registradores
+
+        //ID_EX
+        //Alum
+        //shif
+        //ad pc+4 + j
+
+
+        //
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        k++;
+    }
     
 
 }
