@@ -3,7 +3,7 @@
 #include <fstream>
 #include <string>
 #include <stdlib.h>
-#include "IF_ID.h"
+//#include "IF_ID.h"
 
 
 using namespace std;
@@ -32,11 +32,10 @@ int main(){
     string auxStr; // string aux para receber linha da entrada
     while(arq.good() && k < 128){ // Enquanto nao chegou o fim do arquivo de entrada e nao foi atingido o limite de 128 instrucoes.
         getline(arq, auxStr, '\n');
-        for (int j = 0; j < 32; j++){  // Matriz recebe bit a bit
-            if(auxStr[j] != '0' && auxStr[j] != '1'){ // Se ha caractere nao binario
-                int opc;
+        if(auxStr.size() != 32){
+            int opc;
                 do{ // Loop para resolver o erro.
-                    cout << "Erro: a linha " << (j+1) << " possui caracterio nao binario." << endl;
+                    cout << " Erro: a linha " << (k+1) << " possui quantidade de caracteres diferente de 32." << endl;
                     cout << " - Digite 1 para encerrar." << endl;
                     cout << " - Digite 2 para prosseguir e ler a proxima linha de instrucoes." << endl;
                     cout << "Indique o que deseja fazer: ";
@@ -45,19 +44,35 @@ int main(){
                         exit (1); // Encerra programa
                     else if( opc != 2)
                         cout << " Erro: Opcao invalida!!" << endl;
-                }while(opc != 2); 
-                break; // Interrome for. Prossegue para proxima linha do arqivo de entrada
+                }while(opc != 2); // Interrome for. Prossegue para proxima linha do arqivo de entrada
+        }
+        else{
+            for (int j = 0; j < 32; j++){  // Matriz recebe bit a bit
+                if(auxStr[j] != '0' && auxStr[j] != '1'){ // Se ha caractere nao binario
+                    int opc;
+                    do{ // Loop para resolver o erro.
+                        cout << " Erro: a linha " << (j+1) << " possui caracterio nao binario." << endl;
+                        cout << " - Digite 1 para encerrar." << endl;
+                        cout << " - Digite 2 para prosseguir e ler a proxima linha de instrucoes." << endl;
+                        cout << "Indique o que deseja fazer: ";
+                        cin >> opc;
+                        if (opc == 1)
+                            exit (1); // Encerra programa
+                        else if( opc != 2)
+                            cout << " Erro: Opcao invalida!!" << endl;
+                    }while(opc != 2); // Interrome for. Prossegue para proxima linha do arqivo de entrada
+                }
+                else if(auxStr[j] == '0')
+                    memInst[k][j] = 0;
+                else
+                    memInst[k][j] = 1;
             }
-            else if(auxStr[j] == '0')
-                memInst[k][j] = 0;
-            else
-                memInst[k][j] = 1;
         }
         k++;
     }
-    for (int i = 0; i < 32; i++) {
-        cout << memInst[0][i] << endl;
-    }
+    
+    //for (int i = 0; i < 32; i++) 
+    //   cout << memInst[0][i] << endl;
      
         
     if(k == 128){
@@ -78,7 +93,7 @@ int main(){
 
         int PC = k * 4;
         // Start Pipeline - Etapa 1 do Pipeline: IF_ID
-        IF_ID *ifid = new IF_ID(memInst[k], PC);
+        //IF_ID *ifid = new IF_ID(memInst[k], PC);
 
         // Etapa 2 do Pipiline: ID_EX
 
