@@ -18,61 +18,61 @@ void Controle::attControle(int vet[]){
 
 
 int* Controle::getAluOp() {
-    aluOp[0] = entrada[0];
-    aluOp[1] = entrada[1];
+    this->aluOpaluOp[0] = entrada[0];
+    this->aluOpaluOp[1] = entrada[1];
     return this->aluOpaluOp;
 }
 
 int* Controle::getFunctField() {
-    for(int i = 2 ; i < 8 ; i++){
-        functField[i] = entrada[i];
+    for(int i = 4 ; i < 9 ; i++){
+        this->functFieldfunctField[i] = entrada[i];
     }
     return this->functFieldfunctField;
 }
 
 int* Control::getSaida() {
     if(aluOp[0] == 0 && aluOp[1] == 0){                      // lw ou sw
-       aluSaida[0] = 0;
-       aluSaida[1] = 0;
-       aluSaida[2] = 1;
-       aluSaida[3] = 0;
+       this->aluSaida[0] = 0;
+       this->aluSaida[1] = 0;
+       this->aluSaida[2] = 1;
+       this->aluSaida[3] = 0;
     }
     else if(aluOp[1] == 1){                      // beq
-       aluSaida[0] = 0;
-       aluSaida[1] = 1;
-       aluSaida[2] = 1;
-       aluSaida[3] = 0;
+       this->aluSaida[0] = 0;
+       this->aluSaida[1] = 1;
+       this->aluSaida[2] = 1;
+       this->aluSaida[3] = 0;
     }
     else {                      // R-Type
-        if(functField[2] == 1 && functField[3] == 0 && functField[4] == 1 && functField[4] == 0){                              // set on less than
-           aluSaida[0] = 0;
-           aluSaida[1] = 1;
-           aluSaida[2] = 1;
-           aluSaida[3] = 1;
+        if(functField[0] == 1 && functField[1] == 0 && functField[2] == 1 && functField[3] == 0){                              // set on less than
+           this->aluSaida[0] = 0;
+           this->aluSaida[1] = 1;
+           this->aluSaida[2] = 1;
+           this->aluSaida[3] = 1;
         }
-        if(functField[2] == 0 && functField[3] == 1 && functField[4] == 0 && functField[5] == 1){        // OR
-           aluSaida[0] = 0;
-           aluSaida[1] = 0;
-           aluSaida[2] = 0;
-           aluSaida[3] = 1;
+        if(functField[0] == 0 && functField[1] == 1 && functField[2] == 0 && functField[3] == 1){        // OR
+           this->aluSaida[0] = 0;
+           this->aluSaida[1] = 0;
+           this->aluSaida[2] = 0;
+           this->aluSaida[3] = 1;
         }
-        if(functField[2] == 0 && functField[3] == 1 && functField[4] == 0 && functField[4] == 0){     // AND
-           aluSaida[0] = 0;
-           aluSaida[1] = 0;
-           aluSaida[2] = 0;
-           aluSaida[3] = 0;
+        if(functField[0] == 0 && functField[1] == 1 && functField[2] == 0 && functField[3] == 0){     // AND
+           this->aluSaida[0] = 0;
+           this->aluSaida[1] = 0;
+           this->aluSaida[2] = 0;
+           this->aluSaida[3] = 0;
         }
-        if(functField[2] == 0 && functField[3] == 0 && functField[4] == 1 && functField[4] == 0) {      // subtract
-           aluSaida[0] = 0;
-           aluSaida[1] = 1;
-           aluSaida[2] = 1;
-           aluSaida[3] = 0;
+        if(functField[0] == 0 && functField[1] == 0 && functField[2] == 1 && functField[3] == 0) {      // subtract
+           this->aluSaida[0] = 0;
+           this->aluSaida[1] = 1;
+           this->aluSaida[2] = 1;
+           this->aluSaida[3] = 0;
         }
-        if(functField[2] == 0 && functField[3] == 0 && functField[4] == 0 && functField[5] == 0) {        // ADD
-           aluSaida[0] = 0;
-           aluSaida[1] = 0;
-           aluSaida[2] = 1;
-           aluSaida[3] = 0;
+        if(functField[0] == 0 && functField[1] == 0 && functField[2] == 0 && functField[3] == 0) {        // ADD
+           this->aluSaida[0] = 0;
+           this->aluSaida[1] = 0;
+           this->aluSaida[2] = 1;
+           this->aluSaida[3] = 0;
         }
     }
     return this.aluSaida;                
