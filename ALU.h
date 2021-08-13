@@ -1,19 +1,24 @@
 #ifndef ALU_H_INCLUDED                                       
 #define ALU_H_INCLUDED
-class ALU
+class ALU 
 {
     private:
-        int Operation[4];       // é a saida da ALU
-        int functField[6];      // Recebe da IF_ID
-        bool ALUOp1;            // Recebe da IF_ID
-        bool ALUOp0;            // Recebe da IF_ID
-        
+    int operation[4];  // entrada, vem do  ALUcontrol
+    int aluResult[32];     // saida
+    bool zero = 0;     // saida 
+    int readData1[32];  // valor do registrador 1
+    int readData2[32];  // valor do registrador 2
 
     public:
-        ALU();
-        ~ALU();
+    ALU();
+    ~ALU();
 
-        void attALU(int vet[],bool Op1,bool Op2);    
-        int* getOperation(); 
+    void attAlu(int op[4],int reg1[32], int reg2[32]); // precisa do operation e dos dois registradores
+    void setAluResult();
+    bool getZero();
+    int* getAluResult();
+
 };
+
+
 #endif // ALU_H_INCLUDED
