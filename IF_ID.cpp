@@ -22,6 +22,7 @@ IF_ID::IF_ID(int memInst[], int PC){
     
     for(int i = 0; i < 5; i++) 
         this->instruction_15_11[i] = memInst[i+16]; // Ex: instruction_15_11[0] = memInst[16] | instruction_15_11[4] = memInst[20]
+    // Ate aqui tudo certo.
 }
 
 IF_ID::~IF_ID(){}
