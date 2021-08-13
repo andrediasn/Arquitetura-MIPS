@@ -13,6 +13,12 @@ ID_EX::ID_EX(int PC, int instruction_15_11[], int instruction_20_16[]){
     setReadData();
     setControl();
     setExtSinal();
+
+    //for (int i = 0; i < 32; i++)
+    //    cout << instruction_15_0[i];
+    //cout << endl;
+
+
 }
 
 ID_EX::~ID_EX(){}
@@ -50,5 +56,14 @@ void ID_EX::setReadData() {
 
 ID_EX* ID_EX::get(){
     return this;
+}
+
+
+void ID_EX::start(){
+    cout << endl;
+    for (int i = 0; i < 32; i++)
+        cout << instruction_15_0[i];
+    cout << endl;
+
 }
 

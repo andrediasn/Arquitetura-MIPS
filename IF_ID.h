@@ -12,18 +12,18 @@ class IF_ID{
     int instruction_15_0[16]; // Para unidade operacional
     int instruction_20_16[5]; // Para ID_Ex
     int instruction_15_11[5]; // Para ID_EX
-    int readRegister1[16]; // Bits 25-16 para Banco de Registradores
+    int readRegister1[16]; // Bits 25-21 para Banco de Registradores
     int readRegister2[16]; // Bits 20-16 para banco de registradores
 
     void toID_EX();
     void toControlePrincipal();
     void toBancoRegistradores();
     void toOpLogicos();
-    void start();
-    
+        
     public:
         IF_ID(int memInst[], int PC);
         ~IF_ID();
+        void start();
 };
 
 #endif //IF_ID_H_INCLUDED

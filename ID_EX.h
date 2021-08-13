@@ -31,6 +31,7 @@ class ID_EX{
     public:
         ID_EX(int PC, int instruction_11_15[], int instruction_16_20[]);
         ~ID_EX();
+        void start();
 
         ID_EX* get();
              
