@@ -42,6 +42,16 @@ void ID_EX::setReadData(BancoRegistradores reg) {  // pegando lixo
 
 
 void ID_EX::start(){
-    
+    OpLogicos multiplexador;
+    int *escolhido;
+    escolhido = multiplexador.mutiplexador(this->readData2, this->instruction_15_0, this->ALUSrc);
+
+    ALUcontrol control;
+    control.getOperation(this.)
+
+    ALU operacao;
+    operacao.attAlu(this.this->readData1, escolhido,)
+
+
 }
 
