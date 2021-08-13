@@ -9,10 +9,11 @@ ID_EX::ID_EX(int PC, int instruction_15_11[], int instruction_20_16[]){
         this->instruction_20_16[i] = instruction_20_16[i];
     }
 
+    // certo acima
 
-    setReadData();
-    setControl();
-    setExtSinal();
+    setReadData(); // pegando lixo
+    setControl(); // pegando lixo
+    setExtSinal(); // pegando lixo
 
     //for (int i = 0; i < 32; i++)
     //    cout << instruction_15_0[i];
@@ -23,7 +24,7 @@ ID_EX::ID_EX(int PC, int instruction_15_11[], int instruction_20_16[]){
 
 ID_EX::~ID_EX(){}
 
-void ID_EX::setControl(){
+void ID_EX::setControl(){ // pegando lixo
     Controle control;
     this->RegDst = control.getRegDst();
     this->ALUSrc = control.getALUSrc();
@@ -36,14 +37,14 @@ void ID_EX::setControl(){
     this->ALUOp1 = control.getALUOp1();
 }
 
-void ID_EX::setExtSinal() {
+void ID_EX::setExtSinal() { // pegando lixo
     OpLogicos sinalExt;
     int *aux = sinalExt.getExtensorSinal();
     for (int i = 0; i < 32; i++)
         this->instruction_15_0[i] = aux[i];
 }
 
-void ID_EX::setReadData() { 
+void ID_EX::setReadData() {  // pegando lixo
     BancoRegistradores registrador;
     int *r1 = registrador.getReadData1();
     int *r2 = registrador.getReadData2();
