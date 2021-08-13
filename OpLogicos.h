@@ -7,11 +7,29 @@ class OpLogicos{
         int vetExtSinal [32];
 
     public:
-        OpLogicos();
-        ~OpLogicos();
+        OpLogicos(){}
+        ~OpLogicos(){}
 
-        void extensorSinal(int vetIn[]);
-        int* getExtensorSinal();
+        void extensorSinal(int vetIn[]){
+            if(vetIn[0]==0){
+                for(int i=0;i<16;i++)
+                    this->vetExtSinal[i] = 0;
+                for(int i=16;i<32;i++)  
+                    this->vetExtSinal[i] = vetIn[i-16];
+            }
+            else{
+                for(int i=0;i<16;i++)
+                    this->vetExtSinal[i] = 1;
+                for(int i=16;i<32;i++)  
+                    this->vetExtSinal[i] = vetIn[i-16];
+            }
+        }
+
+        int* getExtensorSinal(){
+            return this->vetExtSinal;
+        }
+
+
         int* deslocamentoEsquerda(int vet[]);
         int* mutiplexador(int vet[], int tipo[]);
         int andLogico(int PC, bool zeroAlu, bool algumaCoisaDaM); // returna PCsec
