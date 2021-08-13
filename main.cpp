@@ -32,8 +32,9 @@ int main(){
     int k = 0; // Representa a linha da matriz, PC = k * 4
     string auxStr; // string aux para receber linha da entrada
     while(arq.good() && k < 128){ // Enquanto nao chegou o fim do arquivo de entrada e nao foi atingido o limite de 128 instrucoes.
-        getline(arq, auxStr, '#');
-        if(auxStr.size() != 32){
+        getline(arq, auxStr, '\n');
+        cout<< k << " - " << auxStr.size()<<endl;
+        /*if(auxStr.size() != 32){
             int opc;
                 do{ // Loop para resolver o erro.
                     cout << " Erro: a linha " << (k+1) << " possui quantidade de caracteres diferente de 32." << endl;
@@ -46,34 +47,21 @@ int main(){
                     else if( opc != 2)
                         cout << " Erro: Opcao invalida!!" << endl;
                 }while(opc != 2); // Interrome for. Prossegue para proxima linha do arqivo de entrada
-        }
-        else{
+        }*/
+        //else{
             for (int j = 0; j < 32; j++){  // Matriz recebe bit a bit
-                if(auxStr[j] != '0' && auxStr[j] != '1'){ // Se ha caractere nao binario
-                    int opc;
-                    do{ // Loop para resolver o erro.
-                        cout << " Erro: a linha " << (k+1) << " possui caracterio nao binario." << endl;
-                        cout << " - Digite 1 para encerrar." << endl;
-                        cout << " - Digite 2 para prosseguir e ler a proxima linha de instrucoes." << endl;
-                        cout << "Indique o que deseja fazer: ";
-                        cin >> opc;
-                        if (opc == 1)
-                            exit (1); // Encerra programa
-                        else if( opc != 2)
-                            cout << " Erro: Opcao invalida!!" << endl;
-                    }while(opc != 2); // Interrome for. Prossegue para proxima linha do arqivo de entrada
-                }
-                else if(auxStr[j] == '0')
+                if(auxStr[j] == '0')
                     memInst[k][j] = 0;
                 else
                     memInst[k][j] = 1;
             }
-        }
+        //}
         k++;
     }
     
-    //for (int i = 0; i < 32; i++) 
-    //   cout << memInst[0][i] << endl;
+    cout << endl;
+    for (int i = 0; i < 32; i++) 
+       cout << memInst[0][i];
      
         
     if(k == 128){
@@ -90,7 +78,7 @@ int main(){
     }
 
     k = 0;
-    while(memInst[k][0] != -1){
+    //while(memInst[k][0] != -1){
 
         // ============= Etapa 2: ID - Instruction decode / Register file read ============= // 
 
@@ -113,7 +101,7 @@ int main(){
         k = PC / 4;
          
         
-    }
+    //}
 
     // instruction [31][30][29]
 }
