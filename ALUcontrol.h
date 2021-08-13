@@ -15,14 +15,12 @@ class ALUcontrol
         ALUcontrol();
         ~ALUcontrol();
 
-        void attALU(int vet[],bool Op1,bool Op0){      // precisa do vetor funct e do aluOp1 e aluOp0
+        int* getOperation(int funct[],bool Op1,bool Op0){
             for(int i = 0; i < 6; i++)
-                this->functField[i] = vet[i];
+                this->functField[i] = funct[i];
             ALUOp1 = Op1;
             ALUOp0 = Op0;
-        }   
 
-        int* getOperation(){
             if(ALUOp0 == 0 && ALUOp1 == 0){   // lw ou sw
                 this->Operation[0] = 0;
                 this->Operation[1] = 0;

@@ -4,6 +4,9 @@
 #include "BancoRegistradores.h"
 #include "Controle.h"
 #include "OpLogicos.h"
+#include "ALUcontrol.h"
+#include "ALU.h"
+
 class ID_EX{
     private:
         int PC;
@@ -21,6 +24,8 @@ class ID_EX{
         bool Branch;
         bool ALUOp0;
         bool ALUOp1;
+
+        int funct[6];
     
     public:
         ID_EX(int PC, int instruction_11_15[], int instruction_16_20[]);

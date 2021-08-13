@@ -31,7 +31,7 @@ class OpLogicos{
 
 
         int* deslocamentoEsquerda(int vet[]);
-        int* mutiplexador(int vet[], int tipo[]);
+        int* mutiplexador(int vet1[], int vet2[], bool control);
         int andLogico(int PC, bool zeroAlu, bool algumaCoisaDaM); // returna PCsec
 };
 
