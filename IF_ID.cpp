@@ -2,7 +2,7 @@
 
 using namespace std;
 
-IF_ID::IF_ID(int memInst[], int PC){
+IF_ID::IF_ID(int memInst[], int PC){ // Seperando os bits recebidos da Memoria de Instrucoes
     this->PC = PC;
     for(int i = 0; i < 6; i++)
         this->controle[5-i] = memInst[i];  // Ex: i=0 -> controle[5] = memInst[0] | i=1 -> controle[4] = memInst[1]
@@ -22,35 +22,31 @@ IF_ID::IF_ID(int memInst[], int PC){
     
     for(int i = 0; i < 5; i++) 
         this->instruction_15_11[i] = memInst[i+16]; // Ex: instruction_15_11[0] = memInst[16] | instruction_15_11[4] = memInst[20]
-    // Ate aqui tudo certo.
 }
 
 IF_ID::~IF_ID(){}
 
-void IF_ID::start(){
-    toControlePrincipal(); // bit 31-26
-    toBancoRegistradores(); // bit 25-21 e 20-16
-    toOpLogicos(); // bit 15-0
-    toID_EX(); // bit 20-16 e 15-11
-}
+ID_EX* IF_ID::start(){
 
-void IF_ID::toID_EX(){
-    ID_EX *idex = new ID_EX(this->PC, this->instruction_15_11, this->instruction_20_16);
-}
-
-void IF_ID::toControlePrincipal(){
+    // Bits enviados ao Controle Principal: 31-26
     Controle control;
     control.attControle(this->controle);
-}
 
-void IF_ID::toBancoRegistradores(){
-    BancoRegistradores readData;
-    readData.setReadData(this->readRegister1, this->readRegister2);
-}
+    // Bits enviados ao Banco de Registradores: 25-21 e 20-16
+    BancoRegistradores reg;
+    reg.setReadData(this->readRegister1, this->readRegister2);
 
-void IF_ID::toOpLogicos(){
+    // Bits enviados ao Extensor de Sinal: 15-0
     OpLogicos extSinal;
     extSinal.extensorSinal(this->instruction_15_0);
-}
 
+
+    // Bits enviados ao ID_EX: 20-16 e 15-11
+    ID_EX *idex = new ID_EX(this->PC, this->instruction_15_11, this->instruction_20_16);
+    idex->setControl(control);
+    idex->setExtSinal(extSinal);
+    idex->setReadData(reg);
+
+    return idex;
+}
 

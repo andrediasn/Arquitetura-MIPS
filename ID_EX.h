@@ -21,23 +21,15 @@ class ID_EX{
         bool Branch;
         bool ALUOp0;
         bool ALUOp1;
-
-
-        void setReadData();
-        void setControl();
-        void setExtSinal();
-    
     
     public:
         ID_EX(int PC, int instruction_11_15[], int instruction_16_20[]);
         ~ID_EX();
         void start();
 
-        ID_EX* get();
-             
-    
-
-    
+        void setReadData(BancoRegistradores reg);
+        void setControl(Controle control);
+        void setExtSinal(OpLogicos extSinal);
 };
 
 #endif //ID_EX_H_INCLUDED

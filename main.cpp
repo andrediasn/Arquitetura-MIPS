@@ -26,7 +26,7 @@ int main(){
         memInst[i][0] = -1; // Inicializando primeira coluna de cada linha com -1 para indicar que esta sem instrucao.
 
 
-    // ============= Etapa 1: IF - Instruction Fetch ======================================== // 
+            // ============= Etapa 1: IF - Instruction Fetch ======================================== // 
 
     // Lendo instrucoes de entrada e salvando na Memoria de Instrucoes
     int k = 0; // Representa a linha da matriz, PC = k * 4
@@ -78,27 +78,28 @@ int main(){
     }
 
     k = 0;
-    //while(memInst[k][0] != -1){
-
-        // ============= Etapa 2: ID - Instruction decode / Register file read ============= // 
+    //while(memInst[k][0] != -1){ // Rever essa verificacao
 
         int PC = k * 4;
         IF_ID *etapa2 = new IF_ID(memInst[k], PC);
-        etapa2->start(); 
 
-        // ============= Etapa 3: EX - Execute / Address calculation ======================= // 
+                // ============= Etapa 2: ID - Instruction decode / Register file read ============= // 
 
-        //ID_EX *etapa3;
-        //etapa3->start();
+        ID_EX *etapa3 = etapa2->start();       
 
-        //etapa3->get();
+                // ============= Etapa 3: EX - Execute / Address calculation ======================= // 
 
-        // Etapa 3 do Pipiline:
+//      EX_MEM *etapa4 = etapa3->start();
 
-        // Etapa 4 do Pipiline:
+                // ============= Etapa 4: MEM - Memory acess ======================================= // 
 
-        // Etapa 5 do Pipiline:
-        // Aqui o valor do pc sera retornado.
+//      MEM_WB *etapa5 = etapa4->start();
+
+                // ============= Etapa 5: WB - Write Back ========================================== // 
+
+//      PC = etapa5->start();
+
+
         k = PC / 4;
          
         
