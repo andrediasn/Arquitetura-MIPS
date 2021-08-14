@@ -88,8 +88,8 @@ class ALU
         }else{                                                                      // operação set less than
             int id1 = 0, id2 = 0;
             for(int i = 0; i < 32; i++){ 
-                id1 += readData1[i] * pow(2,4-i); 
-                id2 += readData2[i] * pow(2,4-i);
+                id1 += readData1[i] * pow(2,31-i); 
+                id2 += readData2[i] * pow(2,31-i);
             }
             if(id1 < id2){
                zero = true;
