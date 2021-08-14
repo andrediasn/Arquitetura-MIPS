@@ -10,6 +10,11 @@
 using namespace std;
 
 int main(){
+    int **mem;                                        // memoria de dados
+    mem = new int*[128];
+    for(int i=0; i<128; i++){
+        mem[i] = new int[32];
+    }
 
     ifstream arq;
     arq.open("Entradas/entrada.txt");
