@@ -1,6 +1,7 @@
 #ifndef ID_EX_H_INCLUDED
 #define ID_EX_H_INCLUDED
 #include <iostream>
+#include "EX_MEM.h"
 #include "BancoRegistradores.h"
 #include "Controle.h"
 #include "OpLogicos.h"
@@ -9,6 +10,7 @@
 
 class ID_EX{
     private:
+        Controle control;
         int PC;
         int instruction_15_0[32]; // Apos extensao de sinal
         int instruction_15_11[5]; 
@@ -28,13 +30,10 @@ class ID_EX{
         int funct[6];
     
     public:
-        ID_EX(int PC, int instruction_11_15[], int instruction_16_20[]);
+        ID_EX(int PC, int instruction_11_15[], int instruction_16_20[], Controle control, BancoRegistradores reg, OpLogicos extSinal);
         ~ID_EX();
-        void start();
-
-        void setReadData(BancoRegistradores reg);
-        void setControl(Controle control);
-        void setExtSinal(OpLogicos extSinal);
+        EX_MEM* start();
+        
 };
 
 #endif //ID_EX_H_INCLUDED

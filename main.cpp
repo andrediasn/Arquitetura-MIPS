@@ -3,15 +3,13 @@
 #include <fstream>
 #include <string>
 #include <stdlib.h>
-#include "IF_ID.h"
-#include "ID_EX.h"
+#include "IF_ID.h"  /// Lembrar de rever os includes .h em cadeia
+
 
 
 using namespace std;
 
 int main(){
-    //FILE* file;
-    //file = fopen("entrada.txt", "r");
 
     ifstream arq;
     arq.open("Entradas/entrada.txt");
@@ -85,22 +83,22 @@ int main(){
 
                 // ============= Etapa 2: ID - Instruction decode / Register file read ============= // 
 
-        ID_EX *etapa3 = etapa2->start();       
+        ID_EX *etapa3 = etapa2->start();    // enviar banco de registradores
 
                 // ============= Etapa 3: EX - Execute / Address calculation ======================= // 
 
-//      EX_MEM *etapa4 = etapa3->start();
+        EX_MEM *etapa4 = etapa3->start();   // enviar banco de registradores
 
                 // ============= Etapa 4: MEM - Memory acess ======================================= // 
 
-//      MEM_WB *etapa5 = etapa4->start();
+//      MEM_WB *etapa5 = etapa4->start();   // envia banco de dados
 
                 // ============= Etapa 5: WB - Write Back ========================================== // 
 
-//      PC = etapa5->start();
+//      PC = etapa5->start();           // envia banco de dados e banco de registradores
 
 
-        k = PC / 4;
+        k = PC / 4; // verificar se apos desvio se mantem % = 0
          
         
     //}

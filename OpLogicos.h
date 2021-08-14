@@ -29,10 +29,34 @@ class OpLogicos{
             return this->vetExtSinal;
         }
 
+        int* deslocamentoEsquerda(int vet[]){
+            //int aux[tam-8];
+            //for(int i=0;i<pos; i++)
+            //    aux[i] = vet[pos+i];
+            
+            //return aux;
 
-        int* deslocamentoEsquerda(int vet[]);
-        int* mutiplexador(int vet1[], int vet2[], bool control);
-        int andLogico(int PC, bool zeroAlu, bool algumaCoisaDaM); // returna PCsec
+        }
+
+
+        int ADD(int PC, int jump[]){
+            // converter jump pra inteiro
+            // desocobrir quantos bits tem
+            int desvio; // = int jump
+            return PC + desvio;
+        }
+
+        int* mutiplexador(int vet1[], int vet2[], bool control){
+            if(control)
+                return vet2;
+            return vet1;
+        }
+
+        int andLogico(bool branch, bool zeroAlu){
+            if(branch && zeroAlu)
+                return true;
+            return false;
+        }
 };
 
 
