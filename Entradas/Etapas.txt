@@ -1,24 +1,18 @@
-Etapa 1: ok
+Etapa 1: 
+    - Desenvolver tratamento de erros
 
 Etapa 2:
-
-    - IF_ID: 
-        Recebe PC e MemInst OK
-        Envia ReadRegister OK
-        Envia inst SinalExt OK
-        Envia ID_EX inst  OK
-        Envia Control ok
-    - OpLogicos: OK
-    - BancoRegistradores: OK
-    - Controle
-        Recebe de IF_ID OK
-        Envia para ID_EX OK
-    - ID_EX:
-        Recebe BR OK
-        Recebe ExtSinal OK
-        Recebe Control OK
-        Recebe IF_ID OK
+    - Reformular o banco de registradores
 
 Etapa 3:
+    - Ver oq shif left 2 recebe (quais bist de instruction 15-0 extendido)
+    - Terminar shifleft2
+    - Terminar ADD
+    - Receber Banco de registradores
 
-    - ID_EX:
+Etapa 4:
+    - fazer start EX_MEM
+    - Enviar para data
+    - etc
+Etapa 5:
+    - All
