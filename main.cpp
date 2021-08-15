@@ -16,6 +16,13 @@ int main(){
         mem[i] = new int[32];
     }
 
+    int **registradores;                             // banco de registradores
+    registradores = new int*[32];
+    for(int i=0; i<32; i++) {
+        registradores[i] = new int[32];
+    }
+    
+
     ifstream arq;
     arq.open("Entradas/entrada.txt");
 
