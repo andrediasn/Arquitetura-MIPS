@@ -9,17 +9,18 @@
 
 using namespace std;
 
+
 int main(){
-    int **mem;                                        // memoria de dados
-    mem = new int*[128];
+    int **dataMem;                  // Inicializando Memoria de dados
+    dataMem = new int*[128];
     for(int i=0; i<128; i++){
-        mem[i] = new int[32];
+        dataMem[i] = new int[32];
     }
 
-    int **registradores;                             // banco de registradores
-    registradores = new int*[32];
+    int **registers;               // Inicializando Banco de registradores
+    registers = new int*[32];
     for(int i=0; i<32; i++) {
-        registradores[i] = new int[32];
+        registers[i] = new int[32];
     }
     
 
@@ -95,25 +96,25 @@ int main(){
 
                 // ============= Etapa 2: ID - Instruction decode / Register file read ============= // 
 
-        ID_EX *etapa3 = etapa2->start();    // enviar banco de registradores
+        ID_EX *etapa3 = etapa2->start(registers);    // enviar banco de registradores
 
                 // ============= Etapa 3: EX - Execute / Address calculation ======================= // 
 
-        EX_MEM *etapa4 = etapa3->start();   // enviar banco de registradores
+        EX_MEM *etapa4 = etapa3->start();
 
                 // ============= Etapa 4: MEM - Memory acess ======================================= // 
 
-//      MEM_WB *etapa5 = etapa4->start();   // envia banco de dados
+        MEM_WB *etapa5 = etapa4->start(dataMem);   // envia banco de dados
 
                 // ============= Etapa 5: WB - Write Back ========================================== // 
 
-//      PC = etapa5->start();           // envia banco de dados e banco de registradores
+        PC = etapa5->start(registers);
 
-
-        k = PC / 4; // verificar se apos desvio se mantem % = 0
+        if( PC%4 == 0 ) // Verifica se PC é multiplo de 4
+            k = PC / 4; // Atualiza posicao da proxima instrucao
+        //else 
+            // fazer tratamento de erro
          
         
     //}
-
-    // instruction [31][30][29]
 }

@@ -49,7 +49,7 @@ EX_MEM* ID_EX::start(){
 
     OpLogicos shiftLeft; // Enviado para deslocamento
     int *jump;
-    jump = shiftLeft.deslocamentoEsquerda(this->instruction_15_0); // confirmar oq isso recebe
+    jump = shiftLeft.deslocamentoEsquerda(this->instruction_15_0, 2); // confirmar oq isso recebe
 
     OpLogicos addResult; // Envia PC e Desvio pro ADD
     int desvio = addResult.ADD(this->PC, jump);

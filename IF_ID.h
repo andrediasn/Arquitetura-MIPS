@@ -18,7 +18,7 @@ class IF_ID{
     public:
         IF_ID(int memInst[], int PC);
         ~IF_ID();
-        ID_EX* start();
+        ID_EX* start(int **registers);
 };
 
 #endif //IF_ID_H_INCLUDED

@@ -28,7 +28,7 @@ IF_ID::~IF_ID(){}
 
         // ================= INICIA ETAPA 2 ================ //
 
-ID_EX* IF_ID::start(){      
+ID_EX* IF_ID::start(int **registers){      
         
         // ================   Lendo de IF_ID ===================== //
 
@@ -37,7 +37,7 @@ ID_EX* IF_ID::start(){
     control.attControle(this->controle); // Bits enviados ao Controle Principal: 31-26
     
     BancoRegistradores reg;
-    reg.setReadData(this->readRegister1, this->readRegister2); // Bits enviados ao Banco de Registradores: 25-21 e 20-16
+    reg.setReadData(this->readRegister1, this->readRegister2, registers); // Bits enviados ao Banco de Registradores: 25-21 e 20-16
     
     OpLogicos extSinal;
     extSinal.extensorSinal(this->instruction_15_0); // Bits enviados ao Extensor de Sinal: 15-0

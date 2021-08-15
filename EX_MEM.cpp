@@ -1,5 +1,6 @@
 #include "EX_MEM.h"
 
+
 EX_MEM::EX_MEM(Controle control, int PC, int desvio, ALU operacaoALU,  int readData[], int writeRegister[]){
 
         // ================   Escrevendo em EX_MEM ===================== //
@@ -29,15 +30,22 @@ EX_MEM::EX_MEM(Controle control, int PC, int desvio, ALU operacaoALU,  int readD
         
 EX_MEM::~EX_MEM(){}
 
-MEM_WB* EX_MEM::start(){
-    
+MEM_WB* EX_MEM::start(int **dataMem){
+    DataMemory datamemory;
+    datamemory.setDataMemory(this->MemRead, this->MemWrite, this->ALUresult, this->readData2, dataMem);   // enviando pro datamemory
+
+    bool PCSrc;
+    OpLogicos andLogico; 
+    PCSrc = andLogico.AND(this->Branch, this->zeroAlu);
+
+                                  // // Escrever em MEM_WB
+    MEM_WB* memwb = new MEM_WB(this->ALUresult, this->writeRegister, this->MemtoReg, this->RegWrite); 
+    return memwb;
 }
 
 
-/*     bool zeroAlu = operacao.getZero(); // Enviado para EXMEM
 
-    int *ALUresult; // Enviado para EXMEM
-    ALUresult = operacao.getAluResult(); */
+
 
 
 

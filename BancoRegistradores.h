@@ -6,7 +6,6 @@
 class BancoRegistradores{
     private:
 
-        int registradoresData[32][32]; // Banco de registradores
         int readData1[32]; // Registrador que sera enviado para ID_EX 
         int readData2[32]; // Registrador que sera enviado para ID_EX
 
@@ -15,18 +14,18 @@ class BancoRegistradores{
         BancoRegistradores();
         ~BancoRegistradores();
 
-        void setReadData(int readRegister1[], int readRegister2[]){ // Recebido de IF_ID
+        void setReadData(int readRegister1[], int readRegister2[], int **registers){ // Recebido de IF_ID
             int id1 = 0, id2 = 0;
             // Transforma binario para inteiro para buscar o indice para buscar no Banco de Registradores
             for(int i = 0; i < 5; i++){ // rever
                 id1 += readRegister1[i] * pow(2,4-i); 
                 id2 += readRegister2[i] * pow(2,4-i);
-            }
+            } // implementar tratamento de erro se for negativo
             
             // Copia conteudo do registrador com indice id para enviar para ID_EX
             for(int i = 0; i < 32; i++){
-                this->readData1[i] = registradoresData[id1][i];
-                this->readData2[i] = registradoresData[id2][i];
+                this->readData1[i] = registers[id1][i];
+                this->readData2[i] = registers[id2][i];
             }
         } 
 

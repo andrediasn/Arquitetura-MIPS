@@ -16,9 +16,9 @@ class MEM_WB{
         bool Branch;
   
     public:
-        MEM_WB();
+        MEM_WB(int Aluresult[], int writeReg[], bool MemtoR, bool RegW);
         ~MEM_WB();
-        //MEM_WB* start();
+        int start(int **registers);
 
 };
 

@@ -5,6 +5,7 @@
 #include "ALU.h"
 #include "Controle.h"
 #include "OpLogicos.h"
+#include "DataMemory.h"
 
 
 
@@ -25,7 +26,7 @@ class EX_MEM{
     public:
         EX_MEM(Controle control, int PC, int desvio, ALU operacaoALU,  int readData[], int writeRegister[]);
         ~EX_MEM();
-        MEM_WB* start();
+        MEM_WB* start(int **dataMem);
 
 };
 
