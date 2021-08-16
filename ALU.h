@@ -10,9 +10,8 @@ class ALU
     int readData1[32];  // valor do registrador 1
     int readData2[32];  // valor do registrador 2
 
-    int* soma(int vet1[32], int vet2[32]){
+    int* soma(int vet1[], int vet2[], int result[]){
         int aux = 0;
-        int result[32];
             for(int i = 31; i >= 0; i--){
                 if(vet1[i] + vet2[i] + aux == 2){
                     aux = 1;
@@ -27,6 +26,7 @@ class ALU
             }
         return result;
     }
+    
     int* inverte(int vet[32]){
         int result[32];
         for(int i = 0; i < 32; i++){
@@ -35,7 +35,7 @@ class ALU
             }else{
                 result[i] = 1;
             }
-        }
+        } // ta sem retorno
     }
 
     public:
@@ -52,7 +52,7 @@ class ALU
         } 
         if(operation[1] == 0 && operation[2] == 1 && operation[3] == 0) {            // operação de add
             int *aux;
-            aux = soma(readData1, readData2);
+            aux = soma(readData1, readData2, aux);
             for(int i = 0; i < 32 ; i++){
                 aluResult[i] = aux[i];
             }
@@ -64,7 +64,7 @@ class ALU
                 ultimo1[i] = 0;
             }
             ultimo1[31] = 1;
-            aux = soma(aux, ultimo1);
+            aux = soma(aux, ultimo1); //auxrever tem erro
             aux = soma(readData1, aux);
             for(int i = 0; i < 32; i++){
                 aluResult[i] = aux[i];

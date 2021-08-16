@@ -1,6 +1,7 @@
 #ifndef OPLOGICOS_H_INCLUDED
 #define OPLOGICOS_H_INCLUDED
 #include <iostream>
+#include <math.h>
 
 class OpLogicos{
     private:
@@ -29,13 +30,13 @@ class OpLogicos{
             return this->vetExtSinal;
         }
 
-        int* shiftLeft(int vet[], int bits){
+        int* shiftLeft(int vet[], int bits, int result[]){
             int aux[32];
             for(int i=0;i<(32-bits); i++)
                 aux[i] = vet[i+bits];
             for(int i=(32-bits);i<32;i++)
                 aux[32-bits] = 0;
-            return aux;
+            return result; // rever esse treco para enviar direto para ADD
         }
 
 

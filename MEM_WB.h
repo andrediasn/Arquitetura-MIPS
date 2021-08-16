@@ -1,5 +1,5 @@
 #ifndef MEM_WB_H_INCLUDED
-#define MEM_WB_H_INCLUDED-
+#define MEM_WB_H_INCLUDED
 #include <iostream>
 #include "OpLogicos.h"
 #include "BancoRegistradores.h"
