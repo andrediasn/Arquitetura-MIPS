@@ -9,7 +9,7 @@ class Controle
         int Op[6]; // Recebe da IF_ID
         bool RegDst;
         bool ALUSrc;
-        bool MemtoReg;
+        bool MemToReg;
         bool RegWrite;
         bool MemRead;
         bool MemWrite;
@@ -32,7 +32,7 @@ class Controle
             if(Op[5] == 1 && Op[3] == 0){  // é uma operação LW
             this->RegDst = 0;
             this->ALUSrc = 1;
-            this->MemtoReg = 1;
+            this->MemToReg = 1;
             this->RegWrite = 1;
             this->MemRead = 1;
             this->MemWrite = 0;
@@ -58,7 +58,7 @@ class Controle
             }else {                   // é uma operaçao tipo R
                 this->RegDst = 1;
                 this->ALUSrc = 0;
-                this->MemtoReg = 0;
+                this->MemToReg = 0;
                 this->RegWrite = 1;
                 this->MemRead = 0;
                 this->MemWrite = 0;
@@ -71,7 +71,7 @@ class Controle
 
         bool getRegDst() {return this->RegDst;}
         bool getALUSrc() {return this->ALUSrc;}
-        bool getMemtoReg() {return this->MemtoReg;}
+        bool getMemToReg() {return this->MemToReg;}
         bool getRegWrite() {return this->RegWrite;}
         bool getMemRead() {return this->MemRead;}
         bool getMemWrite() {return this->MemWrite;}

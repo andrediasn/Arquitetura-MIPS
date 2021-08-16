@@ -19,7 +19,7 @@ class ID_EX{
         int readData2[32];
         bool RegDst;
         bool ALUSrc;
-        bool MemtoReg;
+        bool MemToReg;
         bool RegWrite;
         bool MemRead;
         bool MemWrite;

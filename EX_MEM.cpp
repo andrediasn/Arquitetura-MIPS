@@ -21,7 +21,7 @@ EX_MEM::EX_MEM(Controle control, int PC, int desvio, ALU operacaoALU,  int readD
         this->writeRegister[i] = writeRegister[i]; // get writeRegister
 
     // gets sinais de controle
-    this->MemtoReg = control.getMemtoReg();
+    this->MemToReg = control.getMemToReg();
     this->RegWrite = control.getRegWrite();
     this->MemRead = control.getMemRead();
     this->MemWrite = control.getMemWrite();
@@ -30,16 +30,24 @@ EX_MEM::EX_MEM(Controle control, int PC, int desvio, ALU operacaoALU,  int readD
         
 EX_MEM::~EX_MEM(){}
 
+        // ================= INICIA ETAPA 4 ================ //
+
 MEM_WB* EX_MEM::start(int **dataMem){
+
+            // ================   Lendo de EX_MEM ===================== //
+
     DataMemory datamemory;
     datamemory.setDataMemory(this->MemRead, this->MemWrite, this->ALUresult, this->readData2, dataMem);   // enviando pro datamemory
 
     bool PCSrc;
-    OpLogicos andLogico; 
-    PCSrc = andLogico.AND(this->Branch, this->zeroAlu);
+    OpLogicos op; 
+    PCSrc = op.AND(this->Branch, this->zeroAlu); 
 
-                                  // // Escrever em MEM_WB
-    MEM_WB* memwb = new MEM_WB(this->ALUresult, this->writeRegister, this->MemtoReg, this->RegWrite); 
+    this->PC = op.muxPC(this->PC, this->Desvio, PCSrc);
+
+            // ================ Escreve em MEM_WB ===================== //
+
+    MEM_WB* memwb = new MEM_WB(this->ALUresult, this->writeRegister, this->readData2, this->MemToReg, this->RegWrite, this->PC); 
     return memwb;
 }
 

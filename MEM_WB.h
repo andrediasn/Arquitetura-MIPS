@@ -1,22 +1,21 @@
 #ifndef MEM_WB_H_INCLUDED
-#define MEM_WB_H_INCLUDED
+#define MEM_WB_H_INCLUDED-
 #include <iostream>
+#include "OpLogicos.h"
+#include "BancoRegistradores.h"
+
 class MEM_WB{
     private:
-        int PC;
-        int Desvio;
         bool zeroAlu;
         int ALUresult[32];
         int readData2[32];
         int writeRegister[5]; 
-        bool MemtoReg;
+        bool MemToReg;
         bool RegWrite;
-        bool MemRead;
-        bool MemWrite;
-        bool Branch;
+        int PC;
   
     public:
-        MEM_WB(int Aluresult[], int writeReg[], bool MemtoR, bool RegW);
+        MEM_WB(int Aluresult[], int writeReg[], int readData2[], bool MemToReg, bool RegWrite, int PC);
         ~MEM_WB();
         int start(int **registers);
 

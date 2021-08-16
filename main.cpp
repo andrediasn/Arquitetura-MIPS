@@ -32,7 +32,7 @@ int main(){
         exit (1);
     }
 
-    int memInst[128][32];  // Matriz da Memoria de Instrucoes
+    int memInst[128][32];  // Matriz da Memoria de Instruções
     for(int i = 0; i < 128; i++) 
         memInst[i][0] = -1; // Inicializando primeira coluna de cada linha com -1 para indicar que esta sem instrucao.
 
@@ -57,7 +57,7 @@ int main(){
                         exit (1); // Encerra programa
                     else if( opc != 2)
                         cout << " Erro: Opcao invalida!!" << endl;
-                }while(opc != 2); // Interrome for. Prossegue para proxima linha do arqivo de entrada
+                }while(opc != 2); // Interrome for. Prossegue para proxima linha do arquivo de entrada
         }*/
         //else{
             for (int j = 0; j < 32; j++){  // Matriz recebe bit a bit
@@ -85,7 +85,7 @@ int main(){
                         exit (1); // Encerra programa
             else if(opc != 2)
                         cout << " Erro: Opcao invalida!!" << endl;
-        }while(opc != 2); //Prossegue para proxima linha do arqivo de entrada
+        }while(opc != 2); //Prossegue para proxima linha do arquivo de entrada
     }
 
     k = 0;
@@ -102,7 +102,7 @@ int main(){
 
         EX_MEM *etapa4 = etapa3->start();
 
-                // ============= Etapa 4: MEM - Memory acess ======================================= // 
+                // ============= Etapa 4: MEM - Memory access ======================================= // 
 
         MEM_WB *etapa5 = etapa4->start(dataMem);   // envia banco de dados
 

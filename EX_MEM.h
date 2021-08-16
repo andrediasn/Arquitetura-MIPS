@@ -17,7 +17,7 @@ class EX_MEM{
         int ALUresult[32];
         int readData2[32];
         int writeRegister[5]; 
-        bool MemtoReg;
+        bool MemToReg;
         bool RegWrite;
         bool MemRead;
         bool MemWrite;

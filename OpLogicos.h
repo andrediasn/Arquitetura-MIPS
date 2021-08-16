@@ -29,7 +29,7 @@ class OpLogicos{
             return this->vetExtSinal;
         }
 
-        int* deslocamentoEsquerda(int vet[], int bits){
+        int* shiftLeft(int vet[], int bits){
             int aux[32];
             for(int i=0;i<(32-bits); i++)
                 aux[i] = vet[i+bits];
@@ -52,6 +52,12 @@ class OpLogicos{
             if(control)
                 return vet2;
             return vet1;
+        }
+
+        int muxPC(int PC, int desvio, bool control){
+            if(control)
+                return desvio;
+            return PC;
         }
 
         int AND(bool branch, bool zeroAlu){

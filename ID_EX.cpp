@@ -16,7 +16,7 @@ ID_EX::ID_EX(int PC, int instruction_15_11[], int instruction_20_16[], Controle 
     // get control
     this->RegDst = control.getRegDst();
     this->ALUSrc = control.getALUSrc();
-    this->MemtoReg = control.getMemtoReg();
+    this->MemToReg = control.getMemToReg();
     this->RegWrite = control.getRegWrite();
     this->MemRead = control.getMemRead();
     this->MemWrite = control.getMemWrite();
@@ -47,29 +47,25 @@ EX_MEM* ID_EX::start(){
 
             // ================ Lendo de ID_EX =================== //
 
-    OpLogicos shiftLeft; // Enviado para deslocamento
-    int *jump;
-    jump = shiftLeft.deslocamentoEsquerda(this->instruction_15_0, 2); // confirmar oq isso recebe
+    OpLogicos op;
+    int *jump; // Enviado para deslocamento
+    jump = op.shiftLeft(this->instruction_15_0, 2);
 
-    OpLogicos addResult; // Envia PC e Desvio pro ADD
-    int desvio = addResult.ADD(this->PC, jump);
+    int desvio = op.ADD(this->PC, jump);     // Envia PC e Desvio pro ADD
 
-    OpLogicos muxALU; // Enviado para MUX e depois ALU e depois EXMEM
-    int *toALU;
-    toALU = muxALU.mutiplexador(this->readData2, this->instruction_15_0, this->ALUSrc);
+    int *toALU;     // Enviado para MUX e depois ALU e depois EX_MEM
+    toALU = op.mutiplexador(this->readData2, this->instruction_15_0, this->ALUSrc);
 
-    ALUcontrol control; // Enviado para ALUControl e depois ALU e depois EXMEM
-    int *operation;
+    ALUcontrol control; 
+    int *operation;     // Enviado para ALUControl e depois ALU e depois EX_MEM
     operation = control.getOperation(this->funct, this->ALUOp1, this->ALUOp0);
 
-    ALU operacaoALU; // Enviado para EXMEM
-    operacaoALU.setAluResult(operation, this->readData1, toALU);
+    ALU operacaoALU; 
+    operacaoALU.setAluResult(operation, this->readData1, toALU);    // Enviado para EX_MEM
 
 
-    OpLogicos muxEX_MEM; // Enviado para MUX e depois para EXMEM
-    int *writeRegister;
-    writeRegister = muxEX_MEM.mutiplexador(this->instruction_20_16, this->instruction_15_11, this->RegDst);
-
+    int *writeRegister;     // Enviado para MUX e depois para EX_MEM
+    writeRegister = op.mutiplexador(this->instruction_20_16, this->instruction_15_11, this->RegDst);
 
             // ================ Escreve em EX_MEM =================== //
     
