@@ -5,7 +5,7 @@ using namespace std;
 ID_EX::ID_EX(int PC, int instruction_15_11[], int instruction_20_16[], Controle control, BancoRegistradores reg, OpLogicos extSinal){
     
         // ================   Escrevendo em ID_EX ===================== //
-
+    std::cout << " -> Write ID_EX" << std::endl;
     this->PC = PC;  // get PC
     
     for (int i = 0; i < 5; i++){ 
@@ -36,7 +36,10 @@ ID_EX::ID_EX(int PC, int instruction_15_11[], int instruction_20_16[], Controle 
     // get instruction_15_0 extendido
     int *aux = extSinal.getExtensorSinal();
     for (int i = 0; i < 32; i++)
-        this->instruction_15_0[i] = aux[i];
+        this->extend_15_0[i] = aux[i];
+
+    for(int i = 0; i < 6; i++)  
+        this->funct[i] = extend_15_0[i+26];
 }
 
 ID_EX::~ID_EX(){}
@@ -46,15 +49,16 @@ ID_EX::~ID_EX(){}
 EX_MEM* ID_EX::start(){
 
             // ================ Lendo de ID_EX =================== //
+    std::cout << " -> Read ID_EX" << std::endl;
 
     OpLogicos op;
     int *jump; // Enviado para deslocamento
-    jump = op.shiftLeft(this->instruction_15_0, 2, jump);
+    jump = op.shiftLeft(this->extend_15_0, 2, jump);
 
     int desvio = op.ADD(this->PC, jump);     // Envia PC e Desvio pro ADD
 
     int *toALU;     // Enviado para MUX e depois ALU e depois EX_MEM
-    toALU = op.mutiplexador(this->readData2, this->instruction_15_0, this->ALUSrc);
+    toALU = op.mutiplexador(this->readData2, this->extend_15_0, this->ALUSrc);
 
     ALUcontrol control; 
     int *operation;     // Enviado para ALUControl e depois ALU e depois EX_MEM

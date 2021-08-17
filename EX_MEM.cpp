@@ -4,7 +4,7 @@
 EX_MEM::EX_MEM(Controle control, int PC, int desvio, ALU operacaoALU,  int readData[], int writeRegister[]){
 
         // ================   Escrevendo em EX_MEM ===================== //
-
+    std::cout << " -> Write EX_MEM" << std::endl;
     this->PC = PC;  // get PC
     this->Desvio = desvio; // get desvio
 
@@ -35,13 +35,13 @@ EX_MEM::~EX_MEM(){}
 MEM_WB* EX_MEM::start(int **dataMem){
 
             // ================   Lendo de EX_MEM ===================== //
+    std::cout << " -> Read EX_MEM" << std::endl;
 
+    OpLogicos op; 
+    bool PCSrc = op.AND(this->Branch, this->zeroAlu); 
+    
     DataMemory datam;
     datam.setDataMemory(this->MemRead, this->MemWrite, this->ALUresult, this->readData2, dataMem);   // enviando pro datamemory
-
-    bool PCSrc;
-    OpLogicos op; 
-    PCSrc = op.AND(this->Branch, this->zeroAlu); 
 
     this->PC = op.muxPC(this->PC, this->Desvio, PCSrc);
 

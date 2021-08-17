@@ -12,7 +12,7 @@ class DataMemory{
 
     
     public:
-    DataMemory(){}
+    DataMemory(){std::cout << " -> Data Memory" << std::endl;}
     ~DataMemory(){}
 
     void setDataMemory(bool mRead, bool mWrite, int aluResult[], int wData[], int **data){    // memread, memwrite, aluresult(endereço), conteudo, memoria de dados

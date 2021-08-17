@@ -13,6 +13,7 @@ class ALU
     int* soma(int vet1[], int vet2[], int result[]){
         int aux = 0;
             for(int i = 31; i >= 0; i--){
+                //std::cout << vet1[i] << " + " << vet2[i] << " + " << aux << " = " << vet1[i] + vet2[i] + aux;
                 if(vet1[i] + vet2[i] + aux == 2){
                     aux = 1;
                     result[i] = 0;
@@ -20,9 +21,10 @@ class ALU
                     aux = 1;
                     result[i] = 1;
                 }else{
-                    result[i] = vet1[i] + vet2[i];
+                    result[i] = vet1[i] + vet2[i] + aux;
                     aux = 0;
                 }
+                //std::cout << " = " << result[i] << std::endl;
             }
         return result;
     }
@@ -38,7 +40,8 @@ class ALU
     }
 
     public:
-    ALU() {}
+    ALU() { std::cout << " -> ALU" << std::endl;}
+    
     ~ALU() {}
 
     
@@ -50,19 +53,19 @@ class ALU
             readData2[i] = reg2[i];
         } 
         if(operation[1] == 0 && operation[2] == 1 && operation[3] == 0) {            // operação de add
-            int *aux;
+            int *aux = new int [32];
             aux = soma(readData1, readData2, aux);
             for(int i = 0; i < 32 ; i++){
                 aluResult[i] = aux[i];
             }
         }else if(operation[1] == 1 && operation[2] == 1 && operation[3] == 0){      // operação de sub 
-            int *aux;
+            int *aux = new int [32];
             aux = inverte(readData2, aux);
             int ultimo1[32];
             for(int i = 0; i < 31; i++)
                 ultimo1[i] = 0;
             ultimo1[31] = 1;
-            aux = soma(aux, ultimo1, aux); //auxrever tem erro
+            aux = soma(aux, ultimo1, aux);
             aux = soma(readData1, aux, aux);
             for(int i = 0; i < 32; i++)
                 aluResult[i] = aux[i];

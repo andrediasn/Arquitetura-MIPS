@@ -7,31 +7,69 @@
 
 using namespace std;
 
+void imprimir(int clock, int PC, int **registers, int **instrucao) {
+    cout << endl << "Ciclo de clock atual: " << clock << endl;
+    cout << "Valor do PC: " << PC << endl;
+    cout << "Instrução: ";
+    for(int i = 0; i < 32; i++)
+        cout << instrucao[PC/4][i];
+    cout << endl << "Valores armazenados em cada registrador: " << endl ;
+    for(int i = 0; i < 32; i++){ 
+        cout << "Reg " << i << " = ";
+        for(int j = 0; j < 32; j++)
+            cout << registers[i][j];
+        cout << endl;
+    } 
+    cout << endl;
+}
+
 void wait(int etapa){
     cout << " -> Pressione enter para iniciar etapa " << etapa << endl;
-    string aux;
-    cin >> aux;
+    string aux; 
+    cin >> aux; // pegar o enter
 }
+
+void testeOut(int** data, int id){
+    cout << endl << "result: ";
+    int total = 0;
+    for(int i = 1; i < 32; i++)
+           total += data[id][i] * pow(2,31-i); 
+        cout << total << endl;
+}
+
+
 
 void pipeline(int** memInst, int** dataMem, int** registers, int opcao){
 
     int id = 0;
     int clock = 0;
+
     while(memInst[id][0] != -1){ // Rever essa verificacao
 
         int PC = id * 4;
+
+        imprimir(clock, PC, registers, memInst);
+
+        cout << "Caminho de instrucoes: " << endl;
+        cout << "Etapa 1:" << endl;
+        OpLogicos add;
+        PC = add.addPC(PC); // Para enviar PC + 4
         IF_ID *etapa2 = new IF_ID(memInst[id], PC);  // Etapa 1: IF - Instruction Fetch  // 
         if(opcao == 1) { wait(1);}
 
+        cout << "Etapa 2:" << endl;
         ID_EX *etapa3 = etapa2->start(registers);  // Etapa 2: ID - Instruction decode / Register file read // 
         if(opcao == 1) { wait(2);}
 
+        cout << "Etapa 3:" << endl;
         EX_MEM *etapa4 = etapa3->start(); // Etapa 3: EX - Execute / Address calculation //
         if(opcao == 1) { wait(3);} 
 
+        cout << "Etapa 4:" << endl;
         MEM_WB *etapa5 = etapa4->start(dataMem); // Etapa 4: MEM - Memory access  // 
         if(opcao == 1) { wait(4);} 
 
+        cout << "Etapa 5:" << endl;
         PC = etapa5->start(registers);  // Etapa 5: WB - Write Back // 
         if(opcao == 1) { wait(5);} 
 
@@ -43,6 +81,9 @@ void pipeline(int** memInst, int** dataMem, int** registers, int opcao){
             break;
         }
         clock++;
+
+        testeOut(registers, 17);
+        cout << "Concluido" << endl << endl << "-----" << endl;
     }
 }
 
@@ -51,8 +92,9 @@ void leituraInst(int **memInst, int opcao){
         bool erro = true;
         do{
             string dir; // Recebe nome do arquivo
-            cout << "Digite o nome do arquivo: ";
-            cin >> dir;
+            //cout << "Digite o nome do arquivo: ";
+            //cin >> dir;
+            dir = "Dados/instrucoes.txt";
             ifstream arq;
             arq.open(dir);
 
@@ -110,6 +152,8 @@ void leituraInst(int **memInst, int opcao){
 }
 
 void reset(int **dataMem, int **registers){
+    delete[] dataMem;
+    delete[] registers;
     dataMem = new int*[128];
     for(int i=0; i<128; i++)
         dataMem[i] = new int[32];
@@ -139,6 +183,7 @@ void menu (int **dataMem, int **registers, int **memInst){
         else if (opcao != 0)
             cout << "Opcao " << opcao << "invalida." << endl << endl;
         if (opcao == 1 || opcao == 2){
+            cout << endl;
             cout << "Indique o numero da opcao escolhida referente ao metodo de execucao:" << endl;
             cout << " - [1] Para modo etapa-a-etapa." << endl;
             cout << " - [2] Para modo direto." << endl;
@@ -146,10 +191,9 @@ void menu (int **dataMem, int **registers, int **memInst){
             cout << " - [0] Encerrar execucao do programa." << endl;
             cout << "Opcao escolhida: ";
             cin >> opcao;
-            if(opcao == 1)
+            cout << endl;
+            if(opcao == 1 || opcao == 2)
                 pipeline(memInst, dataMem, registers, opcao);      
-            else if (opcao == 2)
-                pipeline(memInst, dataMem, registers, opcao);
             else if (opcao == 3)
                 reset(dataMem, registers);
             else if (opcao != 0)
@@ -207,13 +251,4 @@ int main(){
     }
     menu(dataMem, registers, memInst);
    
-}
-
-void Imprimir(int clock, int PC, int **registers, int **instrucao) {
-    cout << "Ciclo de clock atual: " << clock << endl;
-    cout << "Valor do PC: " << PC << endl;
-    cout << "Instrução: " << instrucao[clock] << endl;
-    cout << "Valores armazenados em cada registrador: " << endl ;
-    for(int i = 0; i < 32; i++) 
-        cout << "Registrador " << i << " = " << registers[i] << endl;   
 }

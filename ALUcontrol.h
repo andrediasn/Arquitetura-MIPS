@@ -12,12 +12,15 @@ class ALUcontrol
 
     public:
 
-        ALUcontrol() {};
+        ALUcontrol() { std::cout << " -> set ALUcontrol" << std::endl;};
         ~ALUcontrol() {};
 
         int* getOperation(int funct[],bool Op1,bool Op0){
-            for(int i = 0; i < 6; i++)
+            for(int i = 0; i < 6; i++){
                 this->functField[i] = funct[i];
+                std::cout << this->functField[i];
+            }
+            std::cout << std::endl;
             ALUOp1 = Op1;
             ALUOp0 = Op0;
 
@@ -34,31 +37,31 @@ class ALUcontrol
                 this->Operation[3] = 0;
             }
             else {                             // R-Type
-                if(functField[3] == 1 && functField[2] == 0 && functField[1] == 1 && functField[0] == 0){      // set on less than
+                if(functField[2] == 1 && functField[3] == 0 && functField[4] == 1 && functField[5] == 0){      // set on less than
                     this->Operation[0] = 0;
                     this->Operation[1] = 1;
                     this->Operation[2] = 1;
                     this->Operation[3] = 1;
                 }
-                else if(functField[3] == 0 && functField[2] == 1 && functField[1] == 0 && functField[0] == 1){   // OR
+                else if(functField[2] == 0 && functField[3] == 1 && functField[4] == 0 && functField[5] == 1){   // OR
                     this->Operation[0] = 0;
                     this->Operation[1] = 0;
                     this->Operation[2] = 0;
                     this->Operation[3] = 1;
                 }
-                else if(functField[3] == 0 && functField[2] == 1 && functField[1] == 0 && functField[0] == 0){   // AND
+                else if(functField[2] == 0 && functField[3] == 1 && functField[4] == 0 && functField[5] == 0){   // AND
                     this->Operation[0] = 0; 
                     this->Operation[1] = 0;
                     this->Operation[2] = 0;
                     this->Operation[3] = 0;
                 }
-                else if(functField[3] == 0 && functField[2] == 0 && functField[1] == 1 && functField[0] == 0) {   // subtract
+                else if(functField[2] == 0 && functField[3] == 0 && functField[4] == 1 && functField[5] == 0) {   // subtract
                     this->Operation[0] = 0;
                     this->Operation[1] = 1;
                     this->Operation[2] = 1;
                     this->Operation[3] = 0;
                 }
-                else if(functField[3] == 0 && functField[2] == 0 && functField[1] == 0 && functField[0] == 0) {   // ADD
+                else if(functField[2] == 0 && functField[3] == 0 && functField[4] == 0 && functField[5] == 0) {   // ADD
                     this->Operation[0] = 0;
                     this->Operation[1] = 0;
                     this->Operation[2] = 1;

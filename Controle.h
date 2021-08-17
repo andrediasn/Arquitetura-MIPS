@@ -23,6 +23,7 @@ class Controle
         ~Controle(){}
 
         void attControle(int vet[]){
+            std::cout << " -> set Control" << std::endl;
             for(int i = 0; i < 6; i++)
                 this->Op[i] = vet[i];
             setAllSaida();
@@ -55,8 +56,8 @@ class Controle
                 this->MemRead = 0;
                 this->MemWrite = 0;
                 this->Branch = 0;
-                this->ALUOp1 = 1;
-                this->ALUOp0 = 1;
+                this->ALUOp1 = 0;   
+                this->ALUOp0 = 0;   
             }else if (Op[2] == 1) {   // é uma operaçao BEQ
                 this->ALUSrc = 0;
                 this->RegWrite = 0;

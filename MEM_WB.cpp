@@ -3,6 +3,7 @@
 MEM_WB::MEM_WB(int Aluresult[], int writeReg[], int readData2[], bool MemToReg, bool RegWrite, int PC){
 
         // ================   Escrevendo em MEM_WB ===================== //
+    std::cout << " -> Write MEM_WB" << std::endl;
 
     this->MemToReg = MemToReg;
     this->RegWrite = RegWrite;
@@ -23,7 +24,8 @@ MEM_WB::~MEM_WB(){}
 int MEM_WB::start(int **registers){
 
             // ================   Lendo de MEM_WB ===================== //
-
+    std::cout << " -> Read MEM_WB" << std::endl;
+    
     OpLogicos mux;
     int *writeData;
     writeData = mux.mutiplexador(this->ALUresult, this->readData2, this->MemToReg);

@@ -12,7 +12,7 @@ class ID_EX{
     private:
         Controle control;
         int PC;
-        int instruction_15_0[32]; // Apos extensao de sinal
+        int extend_15_0[32]; // Apos extensao de sinal
         int instruction_15_11[5]; 
         int instruction_20_16[5];
         int readData1[32];

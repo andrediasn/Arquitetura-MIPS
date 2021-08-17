@@ -12,6 +12,7 @@ class OpLogicos{
         ~OpLogicos(){}
 
         void extensorSinal(int vetIn[]){
+            std::cout << " -> Sign-extend" << std::endl; 
             if(vetIn[0]==0){
                 for(int i=0;i<16;i++)
                     this->vetExtSinal[i] = 0;
@@ -31,6 +32,7 @@ class OpLogicos{
         }
 
         int* shiftLeft(int vet[], int bits, int result[]){
+            std::cout << " -> Shift Left 2" << std::endl; 
             int aux[32];
             for(int i=0;i<(32-bits); i++)
                 aux[i] = vet[i+bits];
@@ -41,6 +43,7 @@ class OpLogicos{
 
 
         int ADD(int PC, int jump[]){
+            std::cout << " -> ADD" << std::endl; 
             int desvio;
             for(int i = 15; i > 32; i++) // bit17 pois o bit16 é o indicador de sinal
                 desvio += jump[i] * pow(2,31-i);
@@ -49,19 +52,27 @@ class OpLogicos{
             return PC + (desvio*(-1));
         }
 
+        int addPC(int PC){
+            std::cout << " -> ADD" << std::endl;
+            return (PC+4);
+        }
+
         int* mutiplexador(int vet1[], int vet2[], bool control){
+            std::cout << " -> MUX" << std::endl; 
             if(control)
                 return vet2;
             return vet1;
         }
 
         int muxPC(int PC, int desvio, bool control){
+            std::cout << " -> MUX PC" << std::endl;
             if(control)
                 return desvio;
             return PC;
         }
 
         int AND(bool branch, bool zeroAlu){
+            std::cout << " -> AND" << std::endl;
             if(branch && zeroAlu)
                 return true;
             return false;

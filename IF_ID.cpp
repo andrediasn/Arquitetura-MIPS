@@ -3,6 +3,8 @@
 using namespace std;
 
 IF_ID::IF_ID(int memInst[], int PC){    // =============   Escreve em IF_ID ============= //
+
+    std::cout << " -> Write IF_ID" << std::endl;
     this->PC = PC;
     for(int i = 0; i < 6; i++)
         this->controle[5-i] = memInst[i];  // Ex: i=0 -> controle[5] = memInst[0] | i=1 -> controle[4] = memInst[1]
@@ -31,6 +33,7 @@ IF_ID::~IF_ID(){}
 ID_EX* IF_ID::start(int **registers){      
         
         // ================   Lendo de IF_ID ===================== //
+    std::cout << " -> Read IF_ID" << std::endl;
     
     Controle control;
     control.attControle(this->controle); // Bits enviados ao Controle Principal: 31-26

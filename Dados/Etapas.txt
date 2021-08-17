@@ -1,18 +1,20 @@
-Etapa 1: 
-    - Desenvolver tratamento de erros
+ADD ok
+ADDI ok
+SUB ok
 
-Etapa 2:
-    - Reformular o banco de registradores
+and
+or 
+beq
+bne
+slt
+sll
+sw
+lw
+j
+jr
+jal
 
-Etapa 3:
-    - Ver oq shif left 2 recebe (quais bist de instruction 15-0 extendido)
-    - Terminar shifleft2
-    - Terminar ADD
-    - Receber Banco de registradores
 
-Etapa 4:
-    - fazer start EX_MEM
-    - Enviar para data
-    - etc
-Etapa 5:
-    - All
+saida .txt
+
+corrigir o passo a passo
