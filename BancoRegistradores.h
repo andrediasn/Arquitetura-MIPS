@@ -11,8 +11,8 @@ class BancoRegistradores{
 
     public:
 
-        BancoRegistradores();
-        ~BancoRegistradores();
+        BancoRegistradores(){};
+        ~BancoRegistradores(){};
 
         void setReadData(int readRegister1[], int readRegister2[], int **registers){ // Recebido de IF_ID
             int id1 = 0, id2 = 0;

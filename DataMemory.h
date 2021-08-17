@@ -12,10 +12,10 @@ class DataMemory{
 
     
     public:
-    DataMemory();
-    ~DataMemory();
+    DataMemory(){}
+    ~DataMemory(){}
 
-    void setDataMemory(bool mRead, bool mWrite, int aluResult[32], int wData[32], int **data){    // memread, memwrite, aluresult(endereço), conteudo, memoria de dados
+    void setDataMemory(bool mRead, bool mWrite, int aluResult[], int wData[], int **data){    // memread, memwrite, aluresult(endereço), conteudo, memoria de dados
         this->memRead = mRead;
         this->memWrite = mWrite;
         for(int i = 0; i < 32; i++){
@@ -25,9 +25,8 @@ class DataMemory{
         
         int id = 0;            // endereço em inteiro
         // transformar o endereço em um numero inteiro e colocar no int id
-
-        for(int i = 0; i < 32; i++)
-           id += address[i] * pow(2,31-i);
+        for(int i = 1; i < 32; i++)
+           id += address[i] * pow(2,31-i); 
         
         if(memRead){          // o valor de address tem q ser colocado em readData
             for(int i = 0;i < 32; i++)

@@ -31,7 +31,6 @@ IF_ID::~IF_ID(){}
 ID_EX* IF_ID::start(int **registers){      
         
         // ================   Lendo de IF_ID ===================== //
-
     
     Controle control;
     control.attControle(this->controle); // Bits enviados ao Controle Principal: 31-26

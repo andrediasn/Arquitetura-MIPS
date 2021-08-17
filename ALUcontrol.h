@@ -12,8 +12,8 @@ class ALUcontrol
 
     public:
 
-        ALUcontrol();
-        ~ALUcontrol();
+        ALUcontrol() {};
+        ~ALUcontrol() {};
 
         int* getOperation(int funct[],bool Op1,bool Op0){
             for(int i = 0; i < 6; i++)

@@ -27,20 +27,19 @@ class ALU
         return result;
     }
     
-    int* inverte(int vet[32]){
-        int result[32];
+    int* inverte(int vet[], int result[]){
         for(int i = 0; i < 32; i++){
-            if(vet[i] == 1){
+            if(vet[i] == 1)
                 result[i] = 0;
-            }else{
+            else
                 result[i] = 1;
-            }
-        } // ta sem retorno
+        }
+        return result;
     }
 
     public:
-    ALU();
-    ~ALU();
+    ALU() {}
+    ~ALU() {}
 
     
     void setAluResult(int op[4],int reg1[32], int reg2[32]){
@@ -58,24 +57,21 @@ class ALU
             }
         }else if(operation[1] == 1 && operation[2] == 1 && operation[3] == 0){      // operação de sub 
             int *aux;
-            aux = inverte(readData2);
+            aux = inverte(readData2, aux);
             int ultimo1[32];
-            for(int i = 0; i < 31; i++){
+            for(int i = 0; i < 31; i++)
                 ultimo1[i] = 0;
-            }
             ultimo1[31] = 1;
-            aux = soma(aux, ultimo1); //auxrever tem erro
-            aux = soma(readData1, aux);
-            for(int i = 0; i < 32; i++){
+            aux = soma(aux, ultimo1, aux); //auxrever tem erro
+            aux = soma(readData1, aux, aux);
+            for(int i = 0; i < 32; i++)
                 aluResult[i] = aux[i];
-            }
         }else if(operation[1] == 0 && operation[2] == 0 && operation[3] == 0){      // operaçao AND
             for(int i = 31; i >= 0; i--){
-                if(readData1[i] == 1 && readData2[i] == 1){
+                if(readData1[i] == 1 && readData2[i] == 1)
                     aluResult[i] = 1;
-                }else{
+                else
                     aluResult[i] = 0;
-                }
             }
         }else if(operation[1] == 0 && operation[2] == 0 && operation[3] == 1){       // operação OR
             for(int i = 31; i >= 0; i--){

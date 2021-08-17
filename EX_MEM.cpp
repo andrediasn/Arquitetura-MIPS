@@ -36,8 +36,8 @@ MEM_WB* EX_MEM::start(int **dataMem){
 
             // ================   Lendo de EX_MEM ===================== //
 
-    DataMemory datamemory;
-    datamemory.setDataMemory(this->MemRead, this->MemWrite, this->ALUresult, this->readData2, dataMem);   // enviando pro datamemory
+    DataMemory datam;
+    datam.setDataMemory(this->MemRead, this->MemWrite, this->ALUresult, this->readData2, dataMem);   // enviando pro datamemory
 
     bool PCSrc;
     OpLogicos op; 

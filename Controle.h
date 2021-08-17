@@ -47,6 +47,16 @@ class Controle
                 this->Branch = 0;
                 this->ALUOp1 = 0;
                 this->ALUOp0 = 0;
+            }else if (Op[5] == 0 && Op[3] == 1){   // ADDI
+                this->RegDst = 0;
+                this->ALUSrc = 1;
+                this->MemToReg = 0;
+                this->RegWrite = 1;
+                this->MemRead = 0;
+                this->MemWrite = 0;
+                this->Branch = 0;
+                this->ALUOp1 = 1;
+                this->ALUOp0 = 1;
             }else if (Op[2] == 1) {   // é uma operaçao BEQ
                 this->ALUSrc = 0;
                 this->RegWrite = 0;
@@ -54,8 +64,8 @@ class Controle
                 this->MemWrite = 0;
                 this->Branch = 1;
                 this->ALUOp1 = 0;
-                this->ALUOp0 = 1;
-            }else {                   // é uma operaçao tipo R
+                this->ALUOp0 = 1; 
+            }else{                   // é uma operaçao tipo R
                 this->RegDst = 1;
                 this->ALUSrc = 0;
                 this->MemToReg = 0;
