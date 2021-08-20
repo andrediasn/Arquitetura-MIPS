@@ -1,12 +1,12 @@
 #include "EX_MEM.h"
 
 
-EX_MEM::EX_MEM(Controle control, int PC, int desvio, ALU operacaoALU,  int readData[], int writeRegister[]){
+EX_MEM::EX_MEM(Controle control, int PC, int desvio, int jump[], ALU operacaoALU,  int readData[], int writeRegister[]){
 
         // ================   Escrevendo em EX_MEM ===================== //
     std::cout << " -> Write EX_MEM" << std::endl;
     this->PC = PC;  // get PC
-    this->Desvio = desvio; // get desvio
+    this->desvio = desvio; // get desvio
 
     // get from ALU
     this->zeroAlu = operacaoALU.getAluResult();
@@ -15,6 +15,7 @@ EX_MEM::EX_MEM(Controle control, int PC, int desvio, ALU operacaoALU,  int readD
     for(int i = 0; i <32;i++){
         this->ALUresult[i] = aux[i];
         this->readData2[i] = readData[i];// get Registrador2 from ID_EX
+        this->jump[i] = jump[i];
     }
 
     for(int i = 0; i < 5; i++)
@@ -25,7 +26,8 @@ EX_MEM::EX_MEM(Controle control, int PC, int desvio, ALU operacaoALU,  int readD
     this->RegWrite = control.getRegWrite();
     this->MemRead = control.getMemRead();
     this->MemWrite = control.getMemWrite();
-    this->Branch = control.getBranch();    
+    this->Branch = control.getBranch();
+    this->Jump = control.getJump();  
 }
         
 EX_MEM::~EX_MEM(){}
@@ -43,11 +45,14 @@ MEM_WB* EX_MEM::start(int **dataMem){
     DataMemory datam;
     datam.setDataMemory(this->MemRead, this->MemWrite, this->ALUresult, this->readData2, dataMem);   // enviando pro datamemory
 
-    this->PC = op.muxPC(this->PC, this->Desvio, PCSrc);
+    this->PC = op.muxPC(this->PC, this->desvio, PCSrc);
+
+    desvio = op.ADD(this->PC, this->jump); 
+    this->PC = op.muxPC(this->PC, this->desvio, this->Jump);
 
             // ================ Escreve em MEM_WB ===================== //
 
-    MEM_WB* memwb = new MEM_WB(this->ALUresult, this->writeRegister, this->readData2, this->MemToReg, this->RegWrite, this->PC); 
+    MEM_WB* memwb = new MEM_WB(this->ALUresult, this->writeRegister, datam, this->MemToReg, this->RegWrite, this->PC); 
     return memwb;
 }
 

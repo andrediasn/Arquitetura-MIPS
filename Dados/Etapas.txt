@@ -1,16 +1,16 @@
 ADD ok
 ADDI ok
 SUB ok
+and ok
+or  ok
+sw ok
+lw  ok
+j  ok
 
-and
-or 
 beq
 bne
 slt
 sll
-sw
-lw
-j
 jr
 jal
 

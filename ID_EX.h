@@ -12,6 +12,7 @@ class ID_EX{
     private:
         Controle control;
         int PC;
+        int desvioJump[28];
         int extend_15_0[32]; // Apos extensao de sinal
         int instruction_15_11[5]; 
         int instruction_20_16[5];
@@ -26,11 +27,12 @@ class ID_EX{
         bool Branch;
         bool ALUOp0;
         bool ALUOp1;
+        bool Jump;
 
         int funct[6];
     
     public:
-        ID_EX(int PC, int instruction_11_15[], int instruction_16_20[], Controle control, BancoRegistradores reg, OpLogicos extSinal);
+        ID_EX(int PC, int instruction_11_15[], int instruction_16_20[], Controle control, BancoRegistradores reg, OpLogicos op);
         ~ID_EX();
         EX_MEM* start();
         

@@ -2,7 +2,7 @@
 
 using namespace std;
 
-ID_EX::ID_EX(int PC, int instruction_15_11[], int instruction_20_16[], Controle control, BancoRegistradores reg, OpLogicos extSinal){
+ID_EX::ID_EX(int PC, int instruction_15_11[], int instruction_20_16[], Controle control, BancoRegistradores reg, OpLogicos op){
     
         // ================   Escrevendo em ID_EX ===================== //
     std::cout << " -> Write ID_EX" << std::endl;
@@ -23,6 +23,7 @@ ID_EX::ID_EX(int PC, int instruction_15_11[], int instruction_20_16[], Controle 
     this->Branch = control.getBranch();
     this->ALUOp0 = control.getALUOp0();
     this->ALUOp1 = control.getALUOp1();
+    this->Jump = control.getJump();
     this->control = control;
 
     // get Registradores
@@ -33,13 +34,16 @@ ID_EX::ID_EX(int PC, int instruction_15_11[], int instruction_20_16[], Controle 
         this->readData2[i] = r2[i];
     }
 
-    // get instruction_15_0 extendido
-    int *aux = extSinal.getExtensorSinal();
-    for (int i = 0; i < 32; i++)
+   
+    int *aux = op.getExtensorSinal(); // get instruction_15_0 extendido
+    int *aux2 = op.getVetJump();
+    for (int i = 0; i < 32; i++){
         this->extend_15_0[i] = aux[i];
-
+        this->desvioJump[i] = aux2[i];
+    }
     for(int i = 0; i < 6; i++)  
         this->funct[i] = extend_15_0[i+26];
+
 }
 
 ID_EX::~ID_EX(){}
@@ -52,7 +56,7 @@ EX_MEM* ID_EX::start(){
     std::cout << " -> Read ID_EX" << std::endl;
 
     OpLogicos op;
-    int *jump; // Enviado para deslocamento
+    int *jump = new int[32]; // Enviado para deslocamento
     jump = op.shiftLeft(this->extend_15_0, 2, jump);
 
     int desvio = op.ADD(this->PC, jump);     // Envia PC e Desvio pro ADD
@@ -73,7 +77,7 @@ EX_MEM* ID_EX::start(){
 
             // ================ Escreve em EX_MEM =================== //
     
-    EX_MEM* exmem = new EX_MEM(this->control, this->PC, desvio, operacaoALU, this->readData2, writeRegister);
+    EX_MEM* exmem = new EX_MEM(this->control, this->PC, desvio, this->desvioJump, operacaoALU, this->readData2, writeRegister);
     
     return exmem;
 }

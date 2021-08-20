@@ -12,8 +12,9 @@
 class EX_MEM{
     private:
         int PC;
-        int Desvio;
+        int desvio;
         bool zeroAlu;
+        int jump[32];
         int ALUresult[32];
         int readData2[32];
         int writeRegister[5]; 
@@ -22,9 +23,10 @@ class EX_MEM{
         bool MemRead;
         bool MemWrite;
         bool Branch;
+        bool Jump;
   
     public:
-        EX_MEM(Controle control, int PC, int desvio, ALU operacaoALU,  int readData[], int writeRegister[]);
+        EX_MEM(Controle control, int PC, int desvio, int jump[], ALU operacaoALU,  int readData[], int writeRegister[]);
         ~EX_MEM();
         MEM_WB* start(int **dataMem);
 

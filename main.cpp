@@ -11,8 +11,9 @@ void imprimir(int clock, int PC, int **registers, int **instrucao) {
     cout << endl << "Ciclo de clock atual: " << clock << endl;
     cout << "Valor do PC: " << PC << endl;
     cout << "Instrução: ";
+    int id = PC/4;
     for(int i = 0; i < 32; i++)
-        cout << instrucao[PC/4][i];
+        cout << instrucao[id][i];
     cout << endl << "Valores armazenados em cada registrador: " << endl ;
     for(int i = 0; i < 32; i++){ 
         cout << "Reg " << i << " = ";
@@ -30,23 +31,30 @@ void wait(int etapa){
 }
 
 void testeOut(int** data, int id){
-    cout << endl << "result: ";
+    //cout << endl << "result: ";
     int total = 0;
     for(int i = 1; i < 32; i++)
-           total += data[id][i] * pow(2,31-i); 
-        cout << total << endl;
+        total += data[id][i] * pow(2,31-i); 
+    cout << total << endl;
 }
 
+void testeOutBin(int** data, int id){
+    //cout << endl << "result: ";
+    for(int i = 1; i < 32; i++)
+        cout << data[id][i];
+    cout << endl;
+}
 
 
 void pipeline(int** memInst, int** dataMem, int** registers, int opcao){
 
     int id = 0;
     int clock = 0;
+    int PC = 0;
 
     while(memInst[id][0] != -1){ // Rever essa verificacao
 
-        int PC = id * 4;
+        PC = id * 4;
 
         imprimir(clock, PC, registers, memInst);
 
@@ -56,6 +64,8 @@ void pipeline(int** memInst, int** dataMem, int** registers, int opcao){
         PC = add.addPC(PC); // Para enviar PC + 4
         IF_ID *etapa2 = new IF_ID(memInst[id], PC);  // Etapa 1: IF - Instruction Fetch  // 
         if(opcao == 1) { wait(1);}
+
+        clock++;
 
         cout << "Etapa 2:" << endl;
         ID_EX *etapa3 = etapa2->start(registers);  // Etapa 2: ID - Instruction decode / Register file read // 
@@ -73,6 +83,11 @@ void pipeline(int** memInst, int** dataMem, int** registers, int opcao){
         PC = etapa5->start(registers);  // Etapa 5: WB - Write Back // 
         if(opcao == 1) { wait(5);} 
 
+        //cout << "data[1] = ";
+        //testeOutBin(dataMem, 1);
+        //cout << "registers[21] = ";
+        //testeOutBin(registers, 21);
+
         if( PC%4 == 0 ) // Verifica se PC é multiplo de 4
             id = PC / 4; // Atualiza posicao da proxima instrucao
         else {
@@ -80,11 +95,8 @@ void pipeline(int** memInst, int** dataMem, int** registers, int opcao){
             cout << "Interrompendo execucao" << endl;
             break;
         }
-        clock++;
-
-        testeOut(registers, 17);
-        cout << "Concluido" << endl << endl << "-----" << endl;
     }
+        imprimir(clock, PC, registers, memInst);
 }
 
 void leituraInst(int **memInst, int opcao){

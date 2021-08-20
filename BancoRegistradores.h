@@ -33,14 +33,14 @@ class BancoRegistradores{
         
         int* getReadData2() { return this->readData2; } // Enviado para ID_EX
 
-        void setRegisters(int writeRegister[], int writeData[], int **dataMem){
+        void setRegisters(int writeRegister[], int writeData[], int **registers){
             std::cout << " -> set Registers" << std::endl;
             int id = 0;
             for(int i = 0; i < 5; i++) // Transforma binario para inteiro para buscar o indice para buscar no Banco de Registradores
                 id += writeRegister[i] * pow(2,4-i);
 
             for (int i = 0; i < 32; i++)
-                dataMem[id][i] = writeData[i];
+                registers[id][i] = writeData[i];
         }
 
 

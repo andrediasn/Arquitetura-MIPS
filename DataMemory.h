@@ -26,11 +26,11 @@ class DataMemory{
         int id = 0;            // endereço em inteiro
         // transformar o endereço em um numero inteiro e colocar no int id
         for(int i = 1; i < 32; i++)
-           id += address[i] * pow(2,31-i); 
-        
+           id += address[i] * pow(2,31-i);
+        id = id/4;
         if(memRead){          // o valor de address tem q ser colocado em readData
             for(int i = 0;i < 32; i++)
-             readData[i] = data[id][i];
+                readData[i] = data[id][i];
         }else if(memWrite) {               // valor de writeData vai ser armazenada em address
             for(int i = 0; i < 32; i++)
                 data[id][i] = writeData[i];
@@ -38,7 +38,6 @@ class DataMemory{
     }
 
     int *getReadData() {return this->readData;}
-
 
 };
 #endif // DATAMEMORY_H_INCLUDED

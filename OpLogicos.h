@@ -3,16 +3,19 @@
 #include <iostream>
 #include <math.h>
 
+using std::cout;
+using std::endl;
 class OpLogicos{
     private:
         int vetExtSinal [32];
+        int vetJump [32];
 
     public:
         OpLogicos(){}
         ~OpLogicos(){}
 
         void extensorSinal(int vetIn[]){
-            std::cout << " -> Sign-extend" << std::endl; 
+            cout << " -> Sign-extend" << endl; 
             if(vetIn[0]==0){
                 for(int i=0;i<16;i++)
                     this->vetExtSinal[i] = 0;
@@ -32,47 +35,56 @@ class OpLogicos{
         }
 
         int* shiftLeft(int vet[], int bits, int result[]){
-            std::cout << " -> Shift Left 2" << std::endl; 
-            int aux[32];
+            cout << " -> Shift Left 2" << endl; 
             for(int i=0;i<(32-bits); i++)
-                aux[i] = vet[i+bits];
+                result[i] = vet[i+bits];
             for(int i=(32-bits);i<32;i++)
-                aux[32-bits] = 0;
-            return result; // rever esse treco para enviar direto para ADD
+                result[i] = 0;
+            return result; 
         }
+
+        void shiftLeft2(int vet[]){ // para o jump
+            cout << " -> Shift Left 2" << endl; 
+            for(int i=0;i<4;i++) // Soma mais significativos de PC
+                this->vetJump[i] = 0;
+            for(int i=4;i<30; i++) // Copia Jump
+                this->vetJump[i] = vet[i-4];
+            for(int i=30;i<32;i++) // acrescenta 2 bits no menos significativo
+                this->vetJump[i] = 0;
+        }
+
+        int* getVetJump() { return this->vetJump;}
 
 
         int ADD(int PC, int jump[]){
-            std::cout << " -> ADD" << std::endl; 
-            int desvio;
-            for(int i = 15; i > 32; i++) // bit17 pois o bit16 é o indicador de sinal
+            cout << " -> ADD" << endl; 
+            int desvio = 0;
+            for(int i = 15; i < 32; i++) // bit17 pois o bit16 é o indicador de sinal
                 desvio += jump[i] * pow(2,31-i);
-            if(jump[14] == 0)    
-              return PC + desvio;
-            return PC + (desvio*(-1));
+            return (PC + desvio);
         }
 
         int addPC(int PC){
-            std::cout << " -> ADD" << std::endl;
+            cout << " -> ADD" << endl;
             return (PC+4);
         }
 
         int* mutiplexador(int vet1[], int vet2[], bool control){
-            std::cout << " -> MUX" << std::endl; 
+            cout << " -> MUX" << endl; 
             if(control)
                 return vet2;
             return vet1;
         }
 
-        int muxPC(int PC, int desvio, bool control){
-            std::cout << " -> MUX PC" << std::endl;
+        int muxPC(int aux0, int aux1, bool control){
+            cout << " -> MUX PC" << endl;
             if(control)
-                return desvio;
-            return PC;
+                return aux1;
+            return aux0;
         }
 
         int AND(bool branch, bool zeroAlu){
-            std::cout << " -> AND" << std::endl;
+            cout << " -> AND" << endl;
             if(branch && zeroAlu)
                 return true;
             return false;

@@ -24,6 +24,9 @@ IF_ID::IF_ID(int memInst[], int PC){    // =============   Escreve em IF_ID ====
     
     for(int i = 0; i < 5; i++) 
         this->instruction_15_11[i] = memInst[i+16]; // Ex: instruction_15_11[0] = memInst[16] | instruction_15_11[4] = memInst[20]
+
+    for(int i= 0; i < 26; i++)
+        this->jump_25_0[i] = memInst[i+6];
 }
 
 IF_ID::~IF_ID(){}
@@ -41,13 +44,12 @@ ID_EX* IF_ID::start(int **registers){
     BancoRegistradores reg;
     reg.setReadData(this->readRegister1, this->readRegister2, registers); // Bits enviados ao Banco de Registradores: 25-21 e 20-16
     
-    OpLogicos extSinal;
-    extSinal.extensorSinal(this->instruction_15_0); // Bits enviados ao Extensor de Sinal: 15-0
-
+    OpLogicos op;
+    op.extensorSinal(this->instruction_15_0); // Bits enviados ao Extensor de Sinal: 15-0
+    op.shiftLeft2(this->jump_25_0); // endereço de jump enviados para deslocamento;
 
         // ===============   Escreve em ID_EX ==================  //
-
-    ID_EX *idex = new ID_EX(this->PC, this->instruction_15_11, this->instruction_20_16, control, reg, extSinal);
+    ID_EX *idex = new ID_EX(this->PC, this->instruction_15_11, this->instruction_20_16, control, reg, op);
 
     return idex; // Retorna para main
 }
