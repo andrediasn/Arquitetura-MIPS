@@ -12,6 +12,7 @@ class IF_ID{
     int instruction_15_0[16]; // Para Extensor de Sinal
     int instruction_20_16[5]; // Para ID_Ex
     int instruction_15_11[5]; // Para ID_EX
+    int instruction_5_0[6];   // functfield
     int readRegister1[5]; // Bits 25-21 para Banco de Registradores
     int readRegister2[5]; // Bits 20-16 para banco de registradores
     int jump_25_0[26]; // Bits 25-0 para calcular desvio do Jump

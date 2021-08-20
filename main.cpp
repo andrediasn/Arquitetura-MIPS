@@ -7,6 +7,8 @@
 
 using namespace std;
 
+
+
 void imprimir(int clock, int PC, int **registers, int **instrucao) {
     cout << endl << "Ciclo de clock atual: " << clock << endl;
     cout << "Valor do PC: " << PC << endl;
@@ -83,10 +85,16 @@ void pipeline(int** memInst, int** dataMem, int** registers, int opcao){
         PC = etapa5->start(registers);  // Etapa 5: WB - Write Back // 
         if(opcao == 1) { wait(5);} 
 
-        //cout << "data[1] = ";
-        //testeOutBin(dataMem, 1);
         //cout << "registers[21] = ";
         //testeOutBin(registers, 21);
+        cout << "s1[17] = ";
+        testeOut(registers, 17);
+        cout << "t0[8] = ";
+        testeOut(registers, 8);
+        cout << "data[4] = ";
+        testeOut(dataMem, 4);
+        cout << "s4[20] = ";
+        testeOut(registers, 20);
 
         if( PC%4 == 0 ) // Verifica se PC é multiplo de 4
             id = PC / 4; // Atualiza posicao da proxima instrucao

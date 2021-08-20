@@ -5,6 +5,7 @@
 
 using std::cout;
 using std::endl;
+using std::string;
 class OpLogicos{
     private:
         int vetExtSinal [32];
@@ -75,13 +76,43 @@ class OpLogicos{
                 return vet2;
             return vet1;
         }
+        
+        int* mutiplexador2(int ALUresult[], int readData[], int PCbin[], bool MemToReg[]){
+            cout << " -> MUX" << endl;
+            if(MemToReg[0] == 1)
+                return readData;
+            if(MemToReg[1] == 1)
+                return PCbin;
+            return ALUresult;
+        }
+
+         int* mutiplexador3(int aux0[], int aux1[], int aux2[], bool control[]){
+            cout << " -> MUX" << endl;
+            if(control[1] == 0) // alu // 20-16
+                return aux0;
+            if(control[0] == 1) // pc //  ra
+                return aux1;
+            return aux2; // readData //  15-11
+        }
+
+
 
         int muxPC(int aux0, int aux1, bool control){
-            cout << " -> MUX PC" << endl;
+            cout << " -> MUX" << endl;
             if(control)
                 return aux1;
             return aux0;
         }
+
+        int muxPC(int pc, int jr, int jump,  bool control[]){
+            cout << " -> MUX" << endl;
+            if(control[1] == 0)
+                return pc;
+            else if(control[0] == 1)
+                return jr;            
+            return jump;
+        }
+
 
         int AND(bool branch, bool zeroAlu){
             cout << " -> AND" << endl;
@@ -89,6 +120,24 @@ class OpLogicos{
                 return true;
             return false;
         }
+
+        int* toBinary(int n,int vet[]){ //usar no jal
+            string r;
+            while (n != 0){
+                r += ( n % 2 == 0 ? "0" : "1" );
+                n /= 2;
+            } 
+            r.size();
+            for(int i = 0; i < (32 - r.size()), i++;)
+                vet[i] = 0;
+            int j = 0;
+            for(int i = (32 - r.size()); i < 32 ; i++){
+                vet[i] = r[j];
+                j++;
+            }
+            return vet;
+        }     
+        
 };
 
 

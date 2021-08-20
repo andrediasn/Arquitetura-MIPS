@@ -27,6 +27,8 @@ IF_ID::IF_ID(int memInst[], int PC){    // =============   Escreve em IF_ID ====
 
     for(int i= 0; i < 26; i++)
         this->jump_25_0[i] = memInst[i+6];
+    for(int i = 0; i < 6; i++)                                               // CONFIRMAR SE ESTA PEGANDO O CAMPO FUNCT
+        this->instruction_5_0[i] = memInst[i+26];
 }
 
 IF_ID::~IF_ID(){}
@@ -39,7 +41,7 @@ ID_EX* IF_ID::start(int **registers){
     std::cout << " -> Read IF_ID" << std::endl;
     
     Controle control;
-    control.attControle(this->controle); // Bits enviados ao Controle Principal: 31-26
+    control.attControle(this->controle, this->instruction_5_0); // Bits enviados ao Controle Principal: 31-26           (e campo funct)
     
     BancoRegistradores reg;
     reg.setReadData(this->readRegister1, this->readRegister2, registers); // Bits enviados ao Banco de Registradores: 25-21 e 20-16

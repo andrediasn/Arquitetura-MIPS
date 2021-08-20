@@ -18,16 +18,16 @@ class ID_EX{
         int instruction_20_16[5];
         int readData1[32];
         int readData2[32];
-        bool RegDst;
+        bool RegDst[2];
         bool ALUSrc;
-        bool MemToReg;
+        bool MemToReg[2];
         bool RegWrite;
         bool MemRead;
         bool MemWrite;
         bool Branch;
         bool ALUOp0;
         bool ALUOp1;
-        bool Jump;
+        bool Jump[2];
 
         int funct[6];
     

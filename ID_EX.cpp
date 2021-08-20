@@ -14,16 +14,22 @@ ID_EX::ID_EX(int PC, int instruction_15_11[], int instruction_20_16[], Controle 
     }
 
     // get control
-    this->RegDst = control.getRegDst();
+    bool *auxControl = control.getRegDst();
+    this->RegDst[0] = auxControl[0];
+    this->RegDst[1] = auxControl[1];
     this->ALUSrc = control.getALUSrc();
-    this->MemToReg = control.getMemToReg();
+    auxControl = control.getMemToReg();
+    this->MemToReg[0] = auxControl[0];
+    this->MemToReg[1] = auxControl[1]; 
     this->RegWrite = control.getRegWrite();
     this->MemRead = control.getMemRead();
     this->MemWrite = control.getMemWrite();
     this->Branch = control.getBranch();
     this->ALUOp0 = control.getALUOp0();
     this->ALUOp1 = control.getALUOp1();
-    this->Jump = control.getJump();
+    auxControl = control.getJump();
+    this->Jump[0] = auxControl[0];
+    this->Jump[1] = auxControl[1]; 
     this->control = control;
 
     // get Registradores
@@ -35,12 +41,13 @@ ID_EX::ID_EX(int PC, int instruction_15_11[], int instruction_20_16[], Controle 
     }
 
    
-    int *aux = op.getExtensorSinal(); // get instruction_15_0 extendido
-    int *aux2 = op.getVetJump();
+    int *auxExt = op.getExtensorSinal(); // get instruction_15_0 extendido
+    int *auxJump = op.getVetJump();
     for (int i = 0; i < 32; i++){
-        this->extend_15_0[i] = aux[i];
-        this->desvioJump[i] = aux2[i];
+        this->extend_15_0[i] = auxExt[i];
+        this->desvioJump[i] = auxJump[i]; // erro
     }
+    std::cout << std::endl;
     for(int i = 0; i < 6; i++)  
         this->funct[i] = extend_15_0[i+26];
 
@@ -56,10 +63,10 @@ EX_MEM* ID_EX::start(){
     std::cout << " -> Read ID_EX" << std::endl;
 
     OpLogicos op;
-    int *jump = new int[32]; // Enviado para deslocamento
-    jump = op.shiftLeft(this->extend_15_0, 2, jump);
+    int *desvioBeq = new int[32]; // Enviado para deslocamento
+    desvioBeq = op.shiftLeft(this->extend_15_0, 2, desvioBeq);
 
-    int desvio = op.ADD(this->PC, jump);     // Envia PC e Desvio pro ADD
+    int desvio = op.ADD(this->PC, desvioBeq);     // Envia PC e Desvio pro ADD
 
     int *toALU;     // Enviado para MUX e depois ALU e depois EX_MEM
     toALU = op.mutiplexador(this->readData2, this->extend_15_0, this->ALUSrc);
@@ -71,13 +78,18 @@ EX_MEM* ID_EX::start(){
     ALU operacaoALU; 
     operacaoALU.setAluResult(operation, this->readData1, toALU);    // Enviado para EX_MEM
 
+    int ra[32];
+    for (int i=0;i<27;i++)
+        ra[i] = 0;
+    for (int i=27;i<32;i++)
+        ra[i] = 1;
 
     int *writeRegister;     // Enviado para MUX e depois para EX_MEM
-    writeRegister = op.mutiplexador(this->instruction_20_16, this->instruction_15_11, this->RegDst);
+    writeRegister = op.mutiplexador3(this->instruction_20_16, ra, this->instruction_15_11, this->RegDst);
 
             // ================ Escreve em EX_MEM =================== //
     
-    EX_MEM* exmem = new EX_MEM(this->control, this->PC, desvio, this->desvioJump, operacaoALU, this->readData2, writeRegister);
+    EX_MEM* exmem = new EX_MEM(this->control, this->PC, desvio, this->desvioJump, operacaoALU, this->readData1, this->readData2, writeRegister);
     
     return exmem;
 }

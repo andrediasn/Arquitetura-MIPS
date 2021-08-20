@@ -11,12 +11,13 @@ class MEM_WB{
         int ALUresult[32];
         int readData[32];
         int writeRegister[5]; 
-        bool MemToReg;
+        bool MemToReg[2];
         bool RegWrite;
         int PC;
+        int PCbin[32];
   
     public:
-        MEM_WB(int Aluresult[], int writeReg[], DataMemory dataM, bool MemToReg, bool RegWrite, int PC);
+        MEM_WB(int Aluresult[], int writeReg[], DataMemory dataM, bool MemToReg[], bool RegWrite, int PC, int pcbin[]);
         ~MEM_WB();
         int start(int **registers);
 
