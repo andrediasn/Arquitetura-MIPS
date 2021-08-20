@@ -127,13 +127,17 @@ class OpLogicos{
                 r += ( n % 2 == 0 ? "0" : "1" );
                 n /= 2;
             } 
-            r.size();
-            for(int i = 0; i < (32 - r.size()), i++;)
+            int tam = r.size();
+            tam = 32 - tam;
+            for(int i = 0; i < tam; i++)
                 vet[i] = 0;
-            int j = 0;
-            for(int i = (32 - r.size()); i < 32 ; i++){
-                vet[i] = r[j];
-                j++;
+            int j = r.size()-1;
+            for(int i = tam; i < 32; i++){
+                if(r[j] == '0')
+                    vet[i] = 0;
+                else
+                    vet[i] = 1;
+                j--;
             }
             return vet;
         }     

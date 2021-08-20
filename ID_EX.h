@@ -12,7 +12,7 @@ class ID_EX{
     private:
         Controle control;
         int PC;
-        int desvioJump[28];
+        int desvioJump[32];
         int extend_15_0[32]; // Apos extensao de sinal
         int instruction_15_11[5]; 
         int instruction_20_16[5];
@@ -28,7 +28,7 @@ class ID_EX{
         bool ALUOp0;
         bool ALUOp1;
         bool Jump[2];
-
+        bool Bne;
         int funct[6];
     
     public:

@@ -6,13 +6,13 @@ or  ok
 sw ok
 lw  ok
 j  ok
+jal ok
+jr ok
 
 beq
 bne
 slt
 sll
-jr
-jal
 
 
 saida .txt

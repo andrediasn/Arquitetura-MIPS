@@ -25,6 +25,7 @@ ID_EX::ID_EX(int PC, int instruction_15_11[], int instruction_20_16[], Controle 
     this->MemRead = control.getMemRead();
     this->MemWrite = control.getMemWrite();
     this->Branch = control.getBranch();
+    this->Bne = control.getBne();
     this->ALUOp0 = control.getALUOp0();
     this->ALUOp1 = control.getALUOp1();
     auxControl = control.getJump();
@@ -47,7 +48,6 @@ ID_EX::ID_EX(int PC, int instruction_15_11[], int instruction_20_16[], Controle 
         this->extend_15_0[i] = auxExt[i];
         this->desvioJump[i] = auxJump[i]; // erro
     }
-    std::cout << std::endl;
     for(int i = 0; i < 6; i++)  
         this->funct[i] = extend_15_0[i+26];
 
@@ -78,10 +78,8 @@ EX_MEM* ID_EX::start(){
     ALU operacaoALU; 
     operacaoALU.setAluResult(operation, this->readData1, toALU);    // Enviado para EX_MEM
 
-    int ra[32];
-    for (int i=0;i<27;i++)
-        ra[i] = 0;
-    for (int i=27;i<32;i++)
+    int ra[5];
+    for (int i=0;i<5;i++)
         ra[i] = 1;
 
     int *writeRegister;     // Enviado para MUX e depois para EX_MEM

@@ -91,10 +91,14 @@ void pipeline(int** memInst, int** dataMem, int** registers, int opcao){
         testeOut(registers, 17);
         cout << "t0[8] = ";
         testeOut(registers, 8);
+        testeOutBin(registers, 8);
         cout << "data[4] = ";
         testeOut(dataMem, 4);
         cout << "s4[20] = ";
         testeOut(registers, 20);
+        testeOutBin(registers, 20);
+        cout << "ra[31] = ";
+        testeOut(registers, 31);
 
         if( PC%4 == 0 ) // Verifica se PC é multiplo de 4
             id = PC / 4; // Atualiza posicao da proxima instrucao
