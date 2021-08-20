@@ -58,20 +58,13 @@ void wait(int etapa){
     fgetc(stdin);
 }
 
-void testeOut(int** data, int id){
-    //cout << endl << "result: ";
-    int total = 0;
-    for(int i = 1; i < 32; i++)
-        total += data[id][i] * pow(2,31-i); 
-    cout << total << endl;
-}
 
-void testeOutBin(int** data, int id){
+/* void testeOutBin(int** data, int id){ // Funcao usada para testes internos
     //cout << endl << "result: ";
     for(int i = 1; i < 32; i++)
         cout << data[id][i];
     cout << endl;
-}
+} */
 
 void pipeline(int** memInst, int** dataMem, int** registers, int opcao){
     ofstream saida("saida.txt", ios::app);
@@ -114,20 +107,6 @@ void pipeline(int** memInst, int** dataMem, int** registers, int opcao){
         cout << "Etapa 5:" << endl;
         PC = etapa5->start(registers);  // Etapa 5: WB - Write Back // 
         if(opcao == 1) { wait(5);} 
-
-        cout << "s1[17] = ";
-        testeOut(registers, 17);
-        cout << "t0[8] = ";
-        testeOut(registers, 8);
-        testeOutBin(registers, 8);
-        cout << "data[4] = ";
-        testeOut(dataMem, 4);
-        cout << "s4[20] = ";
-        testeOut(registers, 20);
-        testeOutBin(registers, 20);
-        cout << "ra[31] = ";
-        testeOut(registers, 31);
-
 
         if( PC%4 == 0 ) // Verifica se PC é multiplo de 4
             id = PC / 4; // Atualiza posicao da proxima instrucao
@@ -255,7 +234,8 @@ void menu (int **dataMem, int **registers, int **memInst){
     exit(1);
 }
 
-void inicializaDados(int **data, int tam, string dir){ // Funcao usada para testes internos
+
+/* void inicializaDados(int **data, int tam, string dir){ // Funcao usada para testes internos
     ifstream arq;
     arq.open(dir);
     if(arq.fail()){
@@ -275,7 +255,7 @@ void inicializaDados(int **data, int tam, string dir){ // Funcao usada para test
         }
         l++;
     }
-}
+} */
 
 int main(){
     // Criando Memoria de dados
@@ -283,14 +263,14 @@ int main(){
     dataMem = new int*[128];
     for(int i=0; i<128; i++)
         dataMem[i] = new int[32];
-    inicializaDados(dataMem, 128, "Dados/dataMem.txt"); // Inicializa dataMem com nosso "lixo" para testes internos
+    //inicializaDados(dataMem, 128, "Dados/dataMem.txt"); // Inicializa dataMem com nosso "lixo" para testes internos
     
     // Criando Banco de registradores
     int **registers;               
     registers = new int*[32];
     for(int i=0; i<32; i++) 
         registers[i] = new int[32];
-    inicializaDados(registers, 32, "Dados/registers.txt"); // Inicializa dataMem com nosso "lixo" para testes internos
+    //inicializaDados(registers, 32, "Dados/registers.txt"); // Inicializa dataMem com nosso "lixo" para testes internos
     
 
     int **memInst;  // Matriz da Memoria de Instruções
