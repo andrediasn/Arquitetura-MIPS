@@ -16,6 +16,7 @@ class Controle
         bool MemWrite;
         bool Branch;
         bool Jump[2];
+        bool Bne;
         bool ALUOp0;
         bool ALUOp1;
         
@@ -66,7 +67,7 @@ class Controle
                 this->ALUOp1 = 0;   
                 this->ALUOp0 = 0; 
                 this->Jump[1] = 0;  
-            }else if (Op[2] == 1) {   // é uma operaçao BEQ
+            }else if (Op[2] == 1 && Op[0] == 0) {   // é uma operaçao BEQ
                 this->ALUSrc = 0;
                 this->RegWrite = 0;
                 this->MemRead = 0;
@@ -74,6 +75,16 @@ class Controle
                 this->Branch = 1;
                 this->ALUOp1 = 0;
                 this->ALUOp0 = 1;
+                this->Jump[1] = 0;
+            }else if(Op[2] == 1 && Op[0] == 1){              // BNE
+                this->Bne = 1;
+                this->Branch = 0;
+                this->ALUOp1 = 0;
+                this->ALUOp0 = 1;
+                this->MemWrite = 0;
+                this->MemRead = 0;                  // Necessario?
+                this->ALUSrc = 0;
+                this->RegWrite = 0;
                 this->Jump[1] = 0;
             }else if(Op[1] == 1 && Op[0] == 0){            // JUMP
                 this->Jump[0] = 0;
@@ -120,6 +131,7 @@ class Controle
         bool getMemWrite() {return this->MemWrite;}
         bool getBranch() {return this->Branch;}
         bool* getJump() {return this->Jump;}
+        bool getBne() {return this->Bne;}
         bool getALUOp1() {return this->ALUOp1;}
         bool getALUOp0() {return this->ALUOp0;}
                                 

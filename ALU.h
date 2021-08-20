@@ -60,6 +60,7 @@ class ALU
             }
         }else if(operation[1] == 1 && operation[2] == 1 && operation[3] == 0){      // operação de sub 
             int *aux = new int [32];
+            int id;
             aux = inverte(readData2, aux);
             int ultimo1[32];
             for(int i = 0; i < 31; i++)
@@ -69,6 +70,12 @@ class ALU
             aux = soma(readData1, aux, aux);
             for(int i = 0; i < 32; i++)
                 aluResult[i] = aux[i];
+            for(int i = 1; i < 32; i++)
+                id += aluResult[i] * pow(2,31-i);
+            if(id == 0){
+                zero = true;
+            }
+
         }else if(operation[1] == 0 && operation[2] == 0 && operation[3] == 0){      // operaçao AND
             for(int i = 31; i >= 0; i--){
                 if(readData1[i] == 1 && readData2[i] == 1)
