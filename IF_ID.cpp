@@ -1,10 +1,11 @@
 #include "IF_ID.h"
 
-using namespace std;
 
 IF_ID::IF_ID(int memInst[], int PC){    // =============   Escreve em IF_ID ============= //
-
-    std::cout << " -> Write IF_ID" << std::endl;
+    ofstream arq("saida.txt", ios::app);
+    cout << " -> Write IF_ID" << endl;
+    arq << " -> Write IF_ID" << endl; 
+    arq.close();
     this->PC = PC;
     for(int i = 0; i < 6; i++)
         this->controle[5-i] = memInst[i];  // Ex: i=0 -> controle[5] = memInst[0] | i=1 -> controle[4] = memInst[1]
@@ -27,8 +28,12 @@ IF_ID::IF_ID(int memInst[], int PC){    // =============   Escreve em IF_ID ====
 
     for(int i= 0; i < 26; i++)
         this->jump_25_0[i] = memInst[i+6];
+
     for(int i = 0; i < 6; i++)                                               // CONFIRMAR SE ESTA PEGANDO O CAMPO FUNCT
         this->instruction_5_0[i] = memInst[i+26];
+    
+    for(int i = 0; i < 5; i++)                                               // Confirmar se esta pegando o campo shamt
+        this->instruction_10_6[i] = memInst[i+21];
 }
 
 IF_ID::~IF_ID(){}
@@ -38,7 +43,10 @@ IF_ID::~IF_ID(){}
 ID_EX* IF_ID::start(int **registers){      
         
         // ================   Lendo de IF_ID ===================== //
-    std::cout << " -> Read IF_ID" << std::endl;
+    ofstream arq("saida.txt", ios::app);
+    cout << " -> Read IF_ID" << endl;
+    arq << " -> Read IF_ID" << endl;
+    arq.close();
     
     Controle control;
     control.attControle(this->controle, this->instruction_5_0); // Bits enviados ao Controle Principal: 31-26           (e campo funct)
@@ -51,7 +59,7 @@ ID_EX* IF_ID::start(int **registers){
     op.shiftLeft2(this->jump_25_0); // endereço de jump enviados para deslocamento;
 
         // ===============   Escreve em ID_EX ==================  //
-    ID_EX *idex = new ID_EX(this->PC, this->instruction_15_11, this->instruction_20_16, control, reg, op);
+    ID_EX *idex = new ID_EX(this->PC, this->instruction_15_11, this->instruction_20_16,this->instruction_10_6, control, reg, op);
 
     return idex; // Retorna para main
 }

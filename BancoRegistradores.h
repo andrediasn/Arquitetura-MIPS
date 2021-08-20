@@ -3,6 +3,8 @@
 #include <iostream>
 #include <math.h>
 
+using namespace std;
+
 class BancoRegistradores{
     private:
 
@@ -15,7 +17,11 @@ class BancoRegistradores{
         ~BancoRegistradores(){};
 
         void setReadData(int readRegister1[], int readRegister2[], int **registers){ // Recebido de IF_ID
-            std::cout << " -> get Registers" << std::endl;
+            ofstream arq("saida.txt", ios::app);
+            cout << " -> get Registers" << endl;
+            arq << " -> get Registers" << endl;
+            arq.close();
+
             int id1 = 0, id2 = 0;
             for(int i = 0; i < 5; i++){ // Transforma binario para inteiro para buscar o indice para buscar no Banco de Registradores
                 id1 += readRegister1[i] * pow(2,4-i); 
@@ -34,7 +40,11 @@ class BancoRegistradores{
         int* getReadData2() { return this->readData2; } // Enviado para ID_EX
 
         void setRegisters(int writeRegister[], int writeData[], int **registers){
-            std::cout << " -> set Registers" << std::endl;
+            ofstream arq("saida.txt", ios::app);
+            cout << " -> set Registers" << endl;
+            arq << " -> set Registers" << endl;
+            arq.close();
+
             int id = 0;
             for(int i = 0; i < 5; i++) // Transforma binario para inteiro para buscar o indice para buscar no Banco de Registradores
                 id += writeRegister[i] * pow(2,4-i);

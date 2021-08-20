@@ -3,9 +3,7 @@
 #include <iostream>
 #include <math.h>
 
-using std::cout;
-using std::endl;
-using std::string;
+using namespace std;
 class OpLogicos{
     private:
         int vetExtSinal [32];
@@ -16,7 +14,10 @@ class OpLogicos{
         ~OpLogicos(){}
 
         void extensorSinal(int vetIn[]){
+            ofstream arq("saida.txt", ios::app);
             cout << " -> Sign-extend" << endl; 
+            arq << " -> Sign-extend" << endl; 
+            arq.close();
             if(vetIn[0]==0){
                 for(int i=0;i<16;i++)
                     this->vetExtSinal[i] = 0;
@@ -36,7 +37,10 @@ class OpLogicos{
         }
 
         int* shiftLeft(int vet[], int bits, int result[]){
-            cout << " -> Shift Left 2" << endl; 
+            ofstream arq("saida.txt", ios::app);
+            cout << " -> Shift Left 2" << endl;
+            arq << " -> Shift Left 2" << endl; 
+            arq.close();
             for(int i=0;i<(32-bits); i++)
                 result[i] = vet[i+bits];
             for(int i=(32-bits);i<32;i++)
@@ -45,7 +49,10 @@ class OpLogicos{
         }
 
         void shiftLeft2(int vet[]){ // para o jump
-            cout << " -> Shift Left 2" << endl; 
+            ofstream arq("saida.txt", ios::app);
+            cout << " -> Shift Left 2" << endl;
+            arq << " -> Shift Left 2" << endl;
+            arq.close(); 
             for(int i=0;i<4;i++) // Soma mais significativos de PC
                 this->vetJump[i] = 0;
             for(int i=4;i<30; i++) // Copia Jump
@@ -58,7 +65,10 @@ class OpLogicos{
 
 
         int ADD(int PC, int jump[]){
-            cout << " -> ADD" << endl; 
+            ofstream arq("saida.txt", ios::app);
+            cout << " -> ADD" << endl;
+            arq << " -> ADD"  << endl;
+            arq.close();
             int desvio = 0;
             for(int i = 15; i < 32; i++) // bit17 pois o bit16 é o indicador de sinal
                 desvio += jump[i] * pow(2,31-i);
@@ -66,19 +76,28 @@ class OpLogicos{
         }
 
         int addPC(int PC){
+            ofstream arq("saida.txt", ios::app);
             cout << " -> ADD" << endl;
+            arq << " -> ADD"  << endl;
+            arq.close();
             return (PC+4);
         }
 
         int* mutiplexador(int vet1[], int vet2[], bool control){
-            cout << " -> MUX" << endl; 
+            ofstream arq("saida.txt", ios::app);
+            cout << " -> MUX" << endl;
+            arq << " -> MUX" << endl; 
+            arq.close();
             if(control)
                 return vet2;
             return vet1;
         }
         
         int* mutiplexador2(int ALUresult[], int readData[], int PCbin[], bool MemToReg[]){
+            ofstream arq("saida.txt", ios::app);
             cout << " -> MUX" << endl;
+            arq << " -> MUX" << endl; 
+            arq.close();
             if(MemToReg[0] == 1)
                 return readData;
             if(MemToReg[1] == 1)
@@ -87,7 +106,10 @@ class OpLogicos{
         }
 
          int* mutiplexador3(int aux0[], int aux1[], int aux2[], bool control[]){
+            ofstream arq("saida.txt", ios::app);
             cout << " -> MUX" << endl;
+            arq << " -> MUX" << endl; 
+            arq.close();
             if(control[1] == 0) // alu // 20-16
                 return aux0;
             if(control[0] == 1) // pc //  ra
@@ -98,14 +120,20 @@ class OpLogicos{
 
 
         int muxPC(int aux0, int aux1, bool control){
+            ofstream arq("saida.txt", ios::app);
             cout << " -> MUX" << endl;
+            arq << " -> MUX" << endl; 
+            arq.close();
             if(control)
                 return aux1;
             return aux0;
         }
 
         int muxPC(int pc, int jr, int jump,  bool control[]){
+            ofstream arq("saida.txt", ios::app);
             cout << " -> MUX" << endl;
+            arq << " -> MUX" << endl; 
+            arq.close();
             if(control[1] == 0)
                 return pc;
             else if(control[0] == 1)
@@ -114,8 +142,11 @@ class OpLogicos{
         }
 
 
-        int AND(bool branch, bool zeroAlu){
+        bool AND(bool branch, bool zeroAlu){
+            ofstream arq("saida.txt", ios::app);
             cout << " -> AND" << endl;
+            arq << " -> AND" << endl;
+            arq.close();
             if(branch && zeroAlu)
                 return true;
             return false;
@@ -140,6 +171,16 @@ class OpLogicos{
                 j--;
             }
             return vet;
+        }
+        bool OR( bool zeroPCSrc, bool zeroBne) {
+            ofstream arq("saida.txt", ios::app);
+            cout << " -> OR" << endl;
+            arq << " -> OR" << endl;
+            arq.close();
+            if(zeroBne == 1 || zeroPCSrc == 1)
+                return true;
+            else
+                return false;
         }     
         
 };

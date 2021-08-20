@@ -9,16 +9,16 @@ using namespace std;
 
 
 
-void imprimir(int clock, int PC, int **registers, int **instrucao) {
+void consoleOut(int clock, int PC, int **registers, int **instrucao) {
     cout << endl << "Ciclo de clock atual: " << clock << endl;
     cout << "Valor do PC: " << PC << endl;
     cout << "Instrução: ";
     int id = PC/4;
     for(int i = 0; i < 32; i++)
         cout << instrucao[id][i];
-    cout << endl << "Valores armazenados em cada registrador: " << endl ;
+    cout << endl << "Conteudo dos registradores: " << endl ;
     for(int i = 0; i < 32; i++){ 
-        cout << "Reg " << i << " = ";
+        cout << i << " = ";
         for(int j = 0; j < 32; j++)
             cout << registers[i][j];
         cout << endl;
@@ -26,10 +26,36 @@ void imprimir(int clock, int PC, int **registers, int **instrucao) {
     cout << endl;
 }
 
+void imprimir(int clock, int pc, int **registers, int **datamem, int ** instrucao){
+    ofstream arq("saida.txt", ios::app);
+    arq << endl << "Ciclo de clock atual: " << clock << endl;
+    arq << "Valor do PC: " << pc << endl;
+    arq << "Instrução: ";
+    int id = pc/4;
+    for(int i = 0; i < 32; i++)
+        arq << instrucao[id][i];
+
+    arq << endl << endl << "Conteudo dos Registradores: " << endl ;
+    for(int i = 0; i < 32; i++){ 
+        arq << i << " = ";
+        for(int j = 0; j < 32; j++)
+            arq << registers[i][j];
+        arq << endl;
+    } 
+    arq << endl << "Conteudo da memoria de dados: " << endl ;
+    for(int i = 0; i < 128; i++){ 
+        arq << i << " = ";
+        for(int j = 0; j < 32; j++)
+            arq << datamem[i][j];
+        arq << endl;
+    } 
+    arq << endl;
+    arq.close();
+}
+
 void wait(int etapa){
-    cout << " -> Pressione enter para iniciar etapa " << etapa << endl;
-    string aux; 
-    cin >> aux; // pegar o enter
+    cout << "Pressione enter para prosseguir." << etapa << endl;
+    fgetc(stdin);
 }
 
 void testeOut(int** data, int id){
@@ -47,19 +73,19 @@ void testeOutBin(int** data, int id){
     cout << endl;
 }
 
-
 void pipeline(int** memInst, int** dataMem, int** registers, int opcao){
-
+    ofstream saida("saida.txt", ios::app);
     int id = 0;
     int clock = 0;
     int PC = 0;
 
     while(memInst[id][0] != -1){ // Rever essa verificacao
-
         PC = id * 4;
 
-        imprimir(clock, PC, registers, memInst);
-
+        consoleOut(clock, PC, registers, memInst);
+        imprimir(clock, PC, registers, dataMem, memInst);
+        saida << "Caminho de instrucoes: " << endl;
+        saida << endl << "Etapa 1:" << endl;
         cout << "Caminho de instrucoes: " << endl;
         cout << "Etapa 1:" << endl;
         OpLogicos add;
@@ -69,24 +95,26 @@ void pipeline(int** memInst, int** dataMem, int** registers, int opcao){
 
         clock++;
 
+        saida << endl << "Etapa 2:" << endl;
         cout << "Etapa 2:" << endl;
         ID_EX *etapa3 = etapa2->start(registers);  // Etapa 2: ID - Instruction decode / Register file read // 
         if(opcao == 1) { wait(2);}
 
+        saida << endl << "Etapa 3:" << endl;
         cout << "Etapa 3:" << endl;
         EX_MEM *etapa4 = etapa3->start(); // Etapa 3: EX - Execute / Address calculation //
         if(opcao == 1) { wait(3);} 
 
+        saida << endl << "Etapa 4:" << endl;
         cout << "Etapa 4:" << endl;
         MEM_WB *etapa5 = etapa4->start(dataMem); // Etapa 4: MEM - Memory access  // 
         if(opcao == 1) { wait(4);} 
 
+        saida << endl << "Etapa 5:" << endl;
         cout << "Etapa 5:" << endl;
         PC = etapa5->start(registers);  // Etapa 5: WB - Write Back // 
         if(opcao == 1) { wait(5);} 
 
-        //cout << "registers[21] = ";
-        //testeOutBin(registers, 21);
         cout << "s1[17] = ";
         testeOut(registers, 17);
         cout << "t0[8] = ";
@@ -100,6 +128,7 @@ void pipeline(int** memInst, int** dataMem, int** registers, int opcao){
         cout << "ra[31] = ";
         testeOut(registers, 31);
 
+
         if( PC%4 == 0 ) // Verifica se PC é multiplo de 4
             id = PC / 4; // Atualiza posicao da proxima instrucao
         else {
@@ -108,7 +137,7 @@ void pipeline(int** memInst, int** dataMem, int** registers, int opcao){
             break;
         }
     }
-        imprimir(clock, PC, registers, memInst);
+    saida.close();
 }
 
 void leituraInst(int **memInst, int opcao){
@@ -116,9 +145,8 @@ void leituraInst(int **memInst, int opcao){
         bool erro = true;
         do{
             string dir; // Recebe nome do arquivo
-            //cout << "Digite o nome do arquivo: ";
-            //cin >> dir;
-            dir = "Dados/instrucoes.txt";
+            cout << "Digite o nome do arquivo: ";
+            cin >> dir;
             ifstream arq;
             arq.open(dir);
 
@@ -144,14 +172,14 @@ void leituraInst(int **memInst, int opcao){
         }while(erro);
     }
     else{
-        cout << "Escreva uma linha de 32 bits contendo as instrucoes referente as linhas a seguir: " << endl;
-        cout << "(Para indicar que encerrou, digite o numero 2)" << endl;
+        cout << "Escreva uma linha de 32 bits contendo as instrucoes: " << endl;
+        cout << "(Para indicar que encerrou, digite \" ok \")" << endl;
         int i = 0;
         while(i < 128){
-            cout << i << ": " << endl;
+            cout << i << "-> ";
             string aux;
             cin >> aux;
-            if (aux[0] == 2){
+            if (aux == "ok"){
                 cout << "Leitura de instrucoes concluidas." << endl;
                 break;
             }
@@ -192,8 +220,8 @@ void menu (int **dataMem, int **registers, int **memInst){
     do{ 
         cout << endl << " ---- " << endl;
         cout << "Indique o numero da opcao escolhida referente a inicializacao da Memoria de Instrucoes:" << endl;
-        cout << " - [1] Para incerir o nome do arquivo para leitura." << endl;
-        cout << " - [2] Para incerir instrucoes manualmente." << endl;
+        cout << " - [1] Para inserir o nome do arquivo para leitura." << endl;
+        cout << " - [2] Para inserir instrucoes manualmente." << endl;
         cout << " - [3] Para reset dataMem e registers" << endl;
         cout << " - [0] Encerrar execucao do programa." << endl;
         cout << "Opcao escolhida: ";
@@ -248,8 +276,6 @@ void inicializaDados(int **data, int tam, string dir){ // Funcao usada para test
         l++;
     }
 }
-
-
 
 int main(){
     // Criando Memoria de dados

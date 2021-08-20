@@ -1,13 +1,14 @@
 #ifndef EX_MEM_H_INCLUDED
 #define EX_MEM_H_INCLUDED
 #include <iostream>
+#include <fstream>
 #include "MEM_WB.h"
 #include "ALU.h"
 #include "Controle.h"
 #include "OpLogicos.h"
 #include "DataMemory.h"
 
-
+using namespace std;
 
 class EX_MEM{
     private:
@@ -25,6 +26,8 @@ class EX_MEM{
         bool MemWrite;
         bool Branch;
         bool Jump[2];
+        bool Bne;
+        void printSinais();
   
     public:
         EX_MEM(Controle control, int PC, int desvio, int jump[], ALU operacaoALU,  int readData1[], int readData2[], int writeRegister[]);

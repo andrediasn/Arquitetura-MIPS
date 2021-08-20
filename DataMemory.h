@@ -1,6 +1,8 @@
 #ifndef DATAMEMORY_H_INCLUDED                                       
 #define DATAMEMORY_H_INCLUDED
 #include <math.h>
+
+using namespace std;
 class DataMemory{
 
     private:
@@ -12,7 +14,12 @@ class DataMemory{
 
     
     public:
-    DataMemory(){std::cout << " -> Data Memory" << std::endl;}
+    DataMemory(){
+        ofstream arq("saida.txt", ios::app);
+        cout << " -> Data Memory" << endl;
+        arq << " -> Data Memory" << endl;
+        arq.close();
+    }
     ~DataMemory(){}
 
     void setDataMemory(bool mRead, bool mWrite, int aluResult[], int wData[], int **data){    // memread, memwrite, aluresult(endereço), conteudo, memoria de dados

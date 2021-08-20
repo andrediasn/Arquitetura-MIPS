@@ -1,16 +1,19 @@
 #include "ID_EX.h"
 
-using namespace std;
 
-ID_EX::ID_EX(int PC, int instruction_15_11[], int instruction_20_16[], Controle control, BancoRegistradores reg, OpLogicos op){
+ID_EX::ID_EX(int PC, int instruction_15_11[], int instruction_20_16[], int shamt[], Controle control, BancoRegistradores reg, OpLogicos op){
     
         // ================   Escrevendo em ID_EX ===================== //
-    std::cout << " -> Write ID_EX" << std::endl;
+    ofstream arq("saida.txt", ios::app);
+    cout << " -> Write ID_EX" << endl;
+    arq << " -> Write ID_EX" << endl;
+    arq.close();
     this->PC = PC;  // get PC
     
     for (int i = 0; i < 5; i++){ 
         this->instruction_15_11[i] = instruction_15_11[i]; // get instruction_15_11
         this->instruction_20_16[i] = instruction_20_16[i]; // get instruction_20_16
+        this->shamt[i] = shamt[i]; // get bits 10-6
     }
 
     // get control
@@ -25,7 +28,6 @@ ID_EX::ID_EX(int PC, int instruction_15_11[], int instruction_20_16[], Controle 
     this->MemRead = control.getMemRead();
     this->MemWrite = control.getMemWrite();
     this->Branch = control.getBranch();
-    this->Bne = control.getBne();
     this->ALUOp0 = control.getALUOp0();
     this->ALUOp1 = control.getALUOp1();
     auxControl = control.getJump();
@@ -60,7 +62,11 @@ ID_EX::~ID_EX(){}
 EX_MEM* ID_EX::start(){
 
             // ================ Lendo de ID_EX =================== //
-    std::cout << " -> Read ID_EX" << std::endl;
+    printSinais();
+    ofstream arq("saida.txt", ios::app);
+    cout << " -> Read ID_EX" << endl;
+    arq << " -> Read ID_EX" << endl;
+    arq.close();
 
     OpLogicos op;
     int *desvioBeq = new int[32]; // Enviado para deslocamento
@@ -76,7 +82,7 @@ EX_MEM* ID_EX::start(){
     operation = control.getOperation(this->funct, this->ALUOp1, this->ALUOp0);
 
     ALU operacaoALU; 
-    operacaoALU.setAluResult(operation, this->readData1, toALU);    // Enviado para EX_MEM
+    operacaoALU.setAluResult(operation, this->readData1, toALU, this->shamt);    // Enviado para EX_MEM
 
     int ra[5];
     for (int i=0;i<5;i++)
@@ -90,5 +96,17 @@ EX_MEM* ID_EX::start(){
     EX_MEM* exmem = new EX_MEM(this->control, this->PC, desvio, this->desvioJump, operacaoALU, this->readData1, this->readData2, writeRegister);
     
     return exmem;
+}
+
+void ID_EX::printSinais(){
+    ofstream arq("saida.txt", ios::app);
+    arq << "Sinais de controle:" << endl;
+    arq << "ALUSrc = "<< this->ALUSrc << endl;
+    arq << "ALUOp0 = "<< this->ALUOp0 << endl;
+    arq << "ALUOp1 = "<< this->ALUOp1 << endl;
+    arq << "RegDst0 = "<< this->RegDst[0] << endl;
+    arq << "RegDst1 = "<< this->RegDst[1] << endl;
+    arq << endl;
+    arq.close();
 }
 

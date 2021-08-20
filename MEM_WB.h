@@ -1,9 +1,12 @@
 #ifndef MEM_WB_H_INCLUDED
 #define MEM_WB_H_INCLUDED
 #include <iostream>
+#include <fstream>
 #include "OpLogicos.h"
 #include "BancoRegistradores.h"
 #include "DataMemory.h"
+
+using namespace std;
 
 class MEM_WB{
     private:
@@ -15,6 +18,7 @@ class MEM_WB{
         bool RegWrite;
         int PC;
         int PCbin[32];
+        void printSinais();
   
     public:
         MEM_WB(int Aluresult[], int writeReg[], DataMemory dataM, bool MemToReg[], bool RegWrite, int PC, int pcbin[]);

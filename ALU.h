@@ -1,12 +1,15 @@
 #ifndef ALU_H_INCLUDED                                       
 #define ALU_H_INCLUDED
 #include <math.h>
+
+using namespace std;
 class ALU 
 {
     private:
     int operation[4];  // entrada, vem do  ALUcontrol
+    int shamt[5];      // entrada
     int aluResult[32];     // saida       
-    bool zero = false;     // saida 
+    bool zeroAlu;     // saida 
     int readData1[32];  // valor do registrador 1
     int readData2[32];  // valor do registrador 2
 
@@ -40,27 +43,32 @@ class ALU
     }
 
     public:
-    ALU() { std::cout << " -> ALU" << std::endl;}
+    ALU(){
+        ofstream arq("saida.txt", ios::app);
+        cout << " -> ALU" << endl;
+        arq << " -> ALU" << endl;
+        arq.close();
+    }
     
     ~ALU() {}
 
     
-    void setAluResult(int op[4],int reg1[32], int reg2[32]){
+    void setAluResult(int op[4],int reg1[32], int reg2[32], int shamt[]){
         for(int i = 0; i < 4; i++)
-            operation[i] = op[i];
+            this->operation[i] = op[i];
         for(int i = 0; i < 32; i++){
-            readData1[i] = reg1[i];
-            readData2[i] = reg2[i];
+            this->readData1[i] = reg1[i];
+            this->readData2[i] = reg2[i];
         } 
-        if(operation[1] == 0 && operation[2] == 1 && operation[3] == 0) {            // operação de add
+        if(operation[0] == 0 && operation[1] == 0 && operation[2] == 1 && operation[3] == 0) {            // operação de add
             int *aux = new int [32];
             aux = soma(readData1, readData2, aux);
             for(int i = 0; i < 32 ; i++){
-                aluResult[i] = aux[i];
+                this->aluResult[i] = aux[i];
             }
-        }else if(operation[1] == 1 && operation[2] == 1 && operation[3] == 0){      // operação de sub 
+        }else if(operation[0] == 0 && operation[1] == 1 && operation[2] == 1 && operation[3] == 0){      // operação de sub 
             int *aux = new int [32];
-            int id;
+            int sub = 0;
             aux = inverte(readData2, aux);
             int ultimo1[32];
             for(int i = 0; i < 31; i++)
@@ -69,44 +77,55 @@ class ALU
             aux = soma(aux, ultimo1, aux);
             aux = soma(readData1, aux, aux);
             for(int i = 0; i < 32; i++)
-                aluResult[i] = aux[i];
-            for(int i = 1; i < 32; i++)
-                id += aluResult[i] * pow(2,31-i);
-            if(id == 0){
-                zero = true;
-            }
-
-        }else if(operation[1] == 0 && operation[2] == 0 && operation[3] == 0){      // operaçao AND
+                this->aluResult[i] = aux[i];
+            for(int i = 0; i < 32; i++)
+                sub += this->aluResult[i] * pow(2,31-i);
+            if(sub == 0)
+                this->zeroAlu = true;
+            else
+                this->zeroAlu = false;
+            
+        }else if(operation[0] == 0 && operation[1] == 0 && operation[2] == 0 && operation[3] == 0){      // operaçao AND
             for(int i = 31; i >= 0; i--){
                 if(readData1[i] == 1 && readData2[i] == 1)
-                    aluResult[i] = 1;
+                    this->aluResult[i] = 1;
                 else
-                    aluResult[i] = 0;
+                    this->aluResult[i] = 0;
             }
-        }else if(operation[1] == 0 && operation[2] == 0 && operation[3] == 1){       // operação OR
+        }else if(operation[0] == 0 && operation[1] == 0 && operation[2] == 0 && operation[3] == 1){       // operação OR
             for(int i = 31; i >= 0; i--){
                 if(readData1[i] == 1 || readData2[i] == 1){
-                    aluResult[i] = 1;
+                    this->aluResult[i] = 1;
                 }else{
-                    aluResult[i] = 0;
+                    this->aluResult[i] = 0;
                 }
             }
-        }else{                                                                      // operação set less than
-            int id1 = 0, id2 = 0;
-            for(int i = 0; i < 32; i++){ 
-                id1 += readData1[i] * pow(2,31-i); 
-                id2 += readData2[i] * pow(2,31-i);
-            }
-            if(id1 < id2){
-               zero = true;
-            }
-        }
-        
+        }else if (operation[0] == 0 && operation[1] == 1 && operation[2] == 1 && operation[3] == 1){                                       // operação set less than
+            for(int i=0;i<31;i++) 
+                this->aluResult[i] = 0;
+            this->aluResult[31] = 1;
+            int *aux = new int [32];
+            aux = inverte(readData2, aux);
+            aux = soma(aux, aluResult, aux);
+            aux = soma(readData1, aux, aux);
+            if(aux[0] == 1)
+                this->aluResult[31] = 1;
+            else
+                this->aluResult[31] = 0;
+        }else if(operation[0] == 1 && operation[1] == 0 && operation[2] == 0 && operation[3] == 0){                 // sll
+            int shift = 0;
+            for(int i = 0; i < 5; i++)
+                shift += shamt[i] * pow(2,4-i);
+            for(int i=0;i<(32-shift); i++)
+                aluResult[i] = readData2[i+shift];
+            for(int i=(32-shift);i<32;i++)
+                aluResult[i] = 0;
+        }                             
     }
 
-    
-    int* getAluResult() {return aluResult;}
-    bool getZeroAlu()   {return zero;}
+
+    int* getAluResult() {return this->aluResult;}
+    bool getZeroAlu()   {return this->zeroAlu;}
 
 };
 

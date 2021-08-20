@@ -2,6 +2,8 @@
 #define CONTROLE_H_INCLUDED
 #include <iostream>
 
+using namespace std;
+
 class Controle
 {
     private:
@@ -25,8 +27,12 @@ class Controle
         Controle(){}
         ~Controle(){}
 
-        void attControle(int vet[], int funct[]){                 // MUDANÇA
-            std::cout << " -> set Control" << std::endl;
+        void attControle(int vet[], int funct[]){ 
+            ofstream arq("saida.txt", ios::app);                
+            cout << " -> set Control" << endl;
+            arq << " -> set Control" << endl;
+            arq.close();
+
             for(int i = 0; i < 6; i++){
                 this->Op[i] = vet[i];
                 this->functField[i] = funct[i];
@@ -47,6 +53,7 @@ class Controle
             this->ALUOp1 = 0;
             this->ALUOp0 = 0;
             this->Jump[1] = 0;
+            this->Bne = 0;
             }else if(Op[5] == 1 && Op[3] == 1){   // é uma operação SW
                 this->ALUSrc = 1;
                 this->RegWrite = 0;
@@ -56,6 +63,7 @@ class Controle
                 this->ALUOp1 = 0;
                 this->ALUOp0 = 0;
                 this->Jump[1] = 0;
+                this->Bne = 0;
             }else if (Op[5] == 0 && Op[3] == 1){   // ADDI
                 this->RegDst[1] = 0;
                 this->ALUSrc = 1;
@@ -66,9 +74,11 @@ class Controle
                 this->Branch = 0;
                 this->ALUOp1 = 0;   
                 this->ALUOp0 = 0; 
-                this->Jump[1] = 0;  
+                this->Jump[1] = 0;
+                this->Bne = 0;  
             }else if (Op[2] == 1 && Op[0] == 0) {   // é uma operaçao BEQ
                 this->ALUSrc = 0;
+                this->Bne = 0;
                 this->RegWrite = 0;
                 this->MemRead = 0;
                 this->MemWrite = 0;
@@ -82,7 +92,7 @@ class Controle
                 this->ALUOp1 = 0;
                 this->ALUOp0 = 1;
                 this->MemWrite = 0;
-                this->MemRead = 0;                  // Necessario?
+                this->MemRead = 0;                  
                 this->ALUSrc = 0;
                 this->RegWrite = 0;
                 this->Jump[1] = 0;
@@ -92,6 +102,7 @@ class Controle
                 this->MemRead = 0;
                 this->MemWrite = 0;
                 this->RegWrite = 0;
+                this->Bne = 0;  
             }else if(Op[1] == 1 && Op[0] == 1){                  // JAL - Jump and Link
                 this->Jump[0] = 0;
                 this->Jump[1] = 1;
@@ -102,12 +113,27 @@ class Controle
                 this->MemToReg[1] = 1;
                 this->RegDst[0] = 1;
                 this->RegDst[1] = 1;
+                this->Bne = 0;  
             }else if(Op[1] == 0 && Op[0] == 0 && functField[2] == 1 && functField[3] == 0 && functField[4] == 0 && functField[5] == 0) {         //(Jr)
                 this->Jump[0] = 1;
                 this->Jump[1] = 1;
                 this->MemWrite = 0;
                 this->RegWrite = 0;
-            }else{                   // é uma operaçao tipo R                 
+                this->Bne = 0;
+            }else if(functField[0] == 0 && functField[1] == 0 && functField[2] == 0 && functField[3] == 0 && functField[4] == 0 && functField[5] == 0){  // sll
+                this->ALUSrc = 0;
+                this->RegWrite = 1;
+                this->Branch = 0;
+                this->Bne = 0;
+                this->MemWrite = 0;
+                this->MemRead = 0;
+                this->MemToReg[1] = 0; 
+                this->Jump[1] = 0;
+                this->RegDst[0] = 0;
+                this->RegDst[1] = 1;
+                this->ALUOp0 = 0;
+                this->ALUOp1 = 1;
+            }else if (Op[5] == 0 && Op[4] == 0 && Op[3] == 0 && Op[2] == 0 && Op[1] == 0 && Op[0] == 0){                   // é uma operaçao tipo R                 
                 this->Jump[1] = 0;
                 this->RegDst[0] = 0;
                 this->RegDst[1] = 1;
@@ -119,6 +145,7 @@ class Controle
                 this->Branch = 0;
                 this->ALUOp1 = 1;
                 this->ALUOp0 = 0;
+                this->Bne = 0;
             }
         }
 
@@ -134,7 +161,7 @@ class Controle
         bool getBne() {return this->Bne;}
         bool getALUOp1() {return this->ALUOp1;}
         bool getALUOp0() {return this->ALUOp0;}
-                                
+                       
         
 };
 #endif // CONTROLE_H_INCLUDED

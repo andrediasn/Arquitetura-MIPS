@@ -1,5 +1,8 @@
 #ifndef ALUCONTROL_H_INCLUDED                                       
 #define ALUCONTROL_H_INCLUDED
+
+using namespace std;
+
 class ALUcontrol
 {
     private:
@@ -12,7 +15,12 @@ class ALUcontrol
 
     public:
 
-        ALUcontrol() { std::cout << " -> set ALUcontrol" << std::endl;};
+        ALUcontrol() {
+            ofstream arq("saida.txt", ios::app);
+            cout << " -> set ALUcontrol" << endl;
+            arq << " -> set ALUcontrol" << endl;
+            arq.close();
+        };
         ~ALUcontrol() {};
 
         int* getOperation(int funct[],bool Op1,bool Op0){
@@ -58,15 +66,18 @@ class ALUcontrol
                     this->Operation[2] = 1;
                     this->Operation[3] = 0;
                 }
-                else if(functField[2] == 0 && functField[3] == 0 && functField[4] == 0 && functField[5] == 0) {   // ADD
+                else if(functField [0] == 1 && functField[2] == 0 && functField[3] == 0 && functField[4] == 0 && functField[5] == 0) {   // ADD
                     this->Operation[0] = 0;
                     this->Operation[1] = 0;
                     this->Operation[2] = 1;
                     this->Operation[3] = 0;
+                }else if(functField [0] == 0 && functField[2] == 0 && functField[3] == 0 && functField[4] == 0 && functField[5] == 0){                                                                   // sll
+                    this->Operation[0] = 1;
+                    this->Operation[1] = 0;
+                    this->Operation[2] = 0;
+                    this->Operation[3] = 0;
                 }
-                else if(functField[2] == 1 && functField[3] == 0 && functField[4] == 0 && functField[5] == 0) {         // JR
-                    
-                }
+                
             }
             return this->Operation;                
         } 

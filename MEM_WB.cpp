@@ -3,7 +3,10 @@
 MEM_WB::MEM_WB(int Aluresult[], int writeReg[], DataMemory dataM, bool MemToReg[], bool RegWrite, int PC, int pcbin[]){
 
         // ================   Escrevendo em MEM_WB ===================== //
-    std::cout << " -> Write MEM_WB" << std::endl;
+    ofstream arq("saida.txt", ios::app);
+    cout << " -> Write MEM_WB" << endl;
+    arq << " -> Write MEM_WB" << endl; 
+    arq.close();
 
     this->MemToReg[0] = MemToReg[0];
     this->MemToReg[1] = MemToReg[1];
@@ -31,7 +34,12 @@ MEM_WB::~MEM_WB(){}
 int MEM_WB::start(int **registers){
 
             // ================   Lendo de MEM_WB ===================== //
-    std::cout << " -> Read MEM_WB" << std::endl;
+    printSinais();
+    
+    ofstream arq("saida.txt", ios::app);
+    cout << " -> Read MEM_WB" << endl;
+    arq << " -> Read MEM_WB" << endl;
+    arq.close();
     
     OpLogicos mux;
     int *writeData;
@@ -41,4 +49,14 @@ int MEM_WB::start(int **registers){
     reg.setRegisters(this->writeRegister, writeData, registers);
 
     return this->PC; // Devolve PC para main
+}
+
+void MEM_WB::printSinais(){
+    ofstream arq("saida.txt", ios::app);
+    arq << "Sinais de controle:" << endl;
+    arq << "RegWrite = "<< this->RegWrite << endl;
+    arq << "MemToReg0 = "<< this->MemToReg[0] << endl;
+    arq << "MemToReg1 = "<< this->MemToReg[1] << endl;
+    arq << endl;
+    arq.close();
 }

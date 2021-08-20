@@ -6,13 +6,12 @@ or  ok
 sw ok
 lw  ok
 j  ok
-jal ok
-jr ok
-
-beq
-bne
-slt
-sll
+jal 
+jr 
+beq ok
+slt ok
+bne falta se igual
+sll ok
 
 
 saida .txt

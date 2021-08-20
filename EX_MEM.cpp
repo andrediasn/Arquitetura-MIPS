@@ -4,12 +4,15 @@
 EX_MEM::EX_MEM(Controle control, int PC, int desvio, int jump[], ALU operacaoALU, int readData1[], int readData2[], int writeRegister[]){
 
         // ================   Escrevendo em EX_MEM ===================== //
-    std::cout << " -> Write EX_MEM" << std::endl;
+    ofstream arq("saida.txt", ios::app);
+    cout << " -> Write EX_MEM" << endl;
+    arq << " -> Write EX_MEM" << endl;
+    arq.close();
     this->PC = PC;  // get PC
     this->desvio = desvio; // get desvio
 
     // get from ALU
-    this->zeroAlu = operacaoALU.getAluResult();
+    this->zeroAlu = operacaoALU.getZeroAlu();
     int *aux = operacaoALU.getAluResult();
     
     for(int i = 0; i <32;i++){
@@ -33,6 +36,7 @@ EX_MEM::EX_MEM(Controle control, int PC, int desvio, int jump[], ALU operacaoALU
     auxMem = control.getJump();  
     this->Jump[0] = auxMem[0];
     this->Jump[1] = auxMem[1];
+    this->Bne = control.getBne();
 }
         
 EX_MEM::~EX_MEM(){}
@@ -42,10 +46,18 @@ EX_MEM::~EX_MEM(){}
 MEM_WB* EX_MEM::start(int **dataMem){
 
             // ================   Lendo de EX_MEM ===================== //
-    std::cout << " -> Read EX_MEM" << std::endl;
+    printSinais();
+
+    ofstream arq("saida.txt", ios::app);
+    cout << " -> Read EX_MEM" << endl;
+    arq << " -> Read EX_MEM" << endl;
+    arq.close();
 
     OpLogicos op; 
     bool PCSrc = op.AND(this->Branch, this->zeroAlu); // gera indicador se vai haver desvio beq
+    bool andBneZero = op.AND(this->Bne, !(this->zeroAlu)); // gera indicador se vai haver desvio bne
+    bool orPC = op.OR(PCSrc, andBneZero); // gera indicador se vai haver desvio beq ou bne
+    
 
     int *PCbin = new int[32];
     PCbin = op.toBinary(this->PC, PCbin);
@@ -53,7 +65,7 @@ MEM_WB* EX_MEM::start(int **dataMem){
     DataMemory datam;
     datam.setDataMemory(this->MemRead, this->MemWrite, this->ALUresult, this->readData2, dataMem);   // enviando pro datamemory
 
-    this->PC = op.muxPC(this->PC, this->desvio, PCSrc); // pc+4 ou desvio beq
+    this->PC = op.muxPC(this->PC, this->desvio, orPC); // pc+4 ou desvio beq
 
     this->desvio = 0; // pc+4 ou desvio jump
     for(int i = 0; i < 32; i++)
@@ -64,15 +76,25 @@ MEM_WB* EX_MEM::start(int **dataMem){
         jr += this->readData1[i] * pow(2,31-i); 
     this->PC = op.muxPC(this->PC, jr, this->desvio, this->Jump);
 
-
-
             // ================ Escreve em MEM_WB ===================== //
 
     MEM_WB* memwb = new MEM_WB(this->ALUresult, this->writeRegister, datam, this->MemToReg, this->RegWrite, this->PC, PCbin); 
     return memwb;
 }
 
-
+void EX_MEM::printSinais(){
+    ofstream arq("saida.txt", ios::app);
+    arq << "Sinais de controle:" << endl;
+    arq << "MemWrite = "<< this->MemWrite << endl;
+    arq << "MemRead = "<< this->MemRead << endl;
+    arq << "Branch = "<< this->Branch << endl;
+    arq << "ZeroAlu = "<< this->zeroAlu << endl;
+    arq << "Bne = " << this->Bne << endl;
+    arq << "jump0 = " << this->Jump[0] << endl;
+    arq << "jump1 = " << this->Jump[1] << endl;
+    arq << endl;
+    arq.close();
+}
 
 
 
