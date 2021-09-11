@@ -6,14 +6,10 @@ or  ok
 sw ok
 lw  ok
 j  ok
-jal 
-jr 
+jal ok
+jr ok
 beq ok
 slt ok
-bne falta se igual
+bne ok
 sll ok
 
-
-saida .txt
-
-corrigir o passo a passo
